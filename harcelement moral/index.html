@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission : Zéro Harcèlement</title>
+  <style>
+    :root {
+      --bg: #fdfbf7;
+      --card-bg: #ffffff;
+      --card-border: #e2d9cc;
+      --navy: #1e293b;
+      --teal: #0f766e;
+      --amber: #d97706;
+      --green: #15803d;
+      --red: #b91c1c;
+      --text: #1c1917;
+      --text-muted: #57534e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 820px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    header {
+      text-align: center;
+      background: #ffffff;
+      border: 2px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    .tag-mission {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      background: #ccfbf1;
+      border: 1px solid #99f6e4;
+      padding: 4px 14px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .rule-banner {
+      background: #fffbeb;
+      border-left: 4px solid var(--amber);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      color: #92400e;
+      line-height: 1.5;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .tab-btn {
+      background: #ffffff;
+      border: 2px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 12px 8px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      border-color: var(--teal);
+      background: #f0fdfa;
+      color: var(--teal);
+    }
+
+    .tab-btn .badge-status {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #f5f5f4;
+      color: var(--text-muted);
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    .game-card.active {
+      display: flex;
+    }
+
+    .game-header h2 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: var(--navy);
+    }
+
+    .game-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .scenario-box {
+      background: #fafaf9;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .scenario-text {
+      font-size: 1.1rem;
+      color: var(--navy);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    button.choice-btn {
+      background: #ffffff;
+      border: 2px solid var(--card-border);
+      color: var(--navy);
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    button.choice-btn:hover:not(:disabled) {
+      background: #f5f5f4;
+      border-color: var(--teal);
+      transform: translateY(-1px);
+    }
+
+    button.choice-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .feedback-box {
+      display: none;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .feedback-box.correct {
+      display: block;
+      background: #f0fdf4;
+      border: 1px solid var(--green);
+      color: #14532d;
+    }
+
+    .feedback-box.error {
+      display: block;
+      background: #fef2f2;
+      border: 1px solid var(--red);
+      color: #7f1d1d;
+    }
+
+    .primary-btn {
+      align-self: flex-end;
+      background: var(--teal);
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      transition: opacity 0.2s;
+    }
+
+    .primary-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Ordre Jeu 3 */
+    .order-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .order-item {
+      background: #fafaf9;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .order-item-content {
+      font-size: 0.95rem;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+
+    .order-arrows {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .arrow-btn {
+      background: #ffffff;
+      border: 1px solid #a8a29e;
+      color: var(--navy);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .arrow-btn:hover:not(:disabled) {
+      background: #e7e5e4;
+    }
+
+    /* Bilan sobre sans badge */
+    .summary-card {
+      background: var(--card-bg);
+      border: 2px solid var(--teal);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .summary-item {
+      background: #fafaf9;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .summary-item strong {
+      color: var(--teal);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .summary-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      .tabs {
+        grid-template-columns: 1fr;
+      }
+      .btn-group {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="tag-mission">Guide Officiel de l'Ambassadeur • CM1 / CM2</div>
+      <h1>Mission : Zéro Harcèlement</h1>
+      <p>Entraîne-toi à repérer le harcèlement moral, à stopper l'onde de choc et à intervenir en toute sécurité.</p>
+    </header>
+
+    <div class="rule-banner">
+      <strong>Les 2 règles du harcèlement :</strong> 1. <strong>La répétition</strong> (comportements ciblés qui recommencent tout le temps) et 2. <strong>L'intention</strong> (faire mal à l'intérieur). Le harcèlement ne se résume pas à des coups : le silence et l'ignorance font tout aussi mal.
+    </div>
+
+    <!-- Onglets -->
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-btn-1" onclick="switchGame(1)">
+        <span>Jeu 1</span>
+        <span>Évident ou Discret ?</span>
+        <span class="badge-status" id="status-1">En cours</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-2" onclick="switchGame(2)">
+        <span>Jeu 2</span>
+        <span>Le Code d'Urgence</span>
+        <span class="badge-status" id="status-2">En attente</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-3" onclick="switchGame(3)">
+        <span>Jeu 3</span>
+        <span>Casser l'Isolement</span>
+        <span class="badge-status" id="status-3">En attente</span>
+      </button>
+    </div>
+
+    <!-- JEU 1 -->
+    <section class="game-card active" id="game-1">
+      <div class="game-header">
+        <h2>Jeu 1 : Allume ton Radar (Évident vs Discret)</h2>
+        <p>Certaines attaques sont faciles à voir, d'autres sont cachées. Détermine si cette situation relève d'une attaque <strong>évidente</strong> (visible) ou <strong>discrète</strong> (cachée/sournoise).</p>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-text" id="g1-text">Chargement de la situation...</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="choice-btn" id="g1-btn-evident" onclick="answerGame1('evident')">👁️ Évident (Visible)</button>
+        <button class="choice-btn" id="g1-btn-discret" onclick="answerGame1('discret')">🕵️ Discret (Caché)</button>
+      </div>
+
+      <div class="feedback-box" id="g1-feedback"></div>
+      <button class="primary-btn" id="g1-next" onclick="nextGame1()">Situation suivante</button>
+    </section>
+
+    <!-- JEU 2 -->
+    <section class="game-card" id="game-2">
+      <div class="game-header">
+        <h2>Jeu 2 : Le Code d'Urgence (Comment Agir en Sécurité ?)</h2>
+        <p>Face à chaque situation, applique la décision du protocole : <strong>Alerter immédiatement</strong>, <strong>Dire STOP fermement</strong>, ou <strong>Protéger & Accompagner</strong>.</p>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-text" id="g2-text">Chargement du scénario...</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="choice-btn" onclick="answerGame2('alerter')">🚨 Alerter un adulte (Risqué)</button>
+        <button class="choice-btn" onclick="answerGame2('stopper')">🛑 Dire STOP d'une voix forte (Sûr)</button>
+        <button class="choice-btn" onclick="answerGame2('proteger')">🤝 Protéger et accompagner</button>
+      </div>
+
+      <div class="feedback-box" id="g2-feedback"></div>
+      <button class="primary-btn" id="g2-next" onclick="nextGame2()">Scénario suivant</button>
+    </section>
+
+    <!-- JEU 3 -->
+    <section class="game-card" id="game-3">
+      <div class="game-header">
+        <h2>Jeu 3 : La Chaîne pour Casser l'Isolement</h2>
+        <p>Pour vaincre l'isolement social et aider un camarade sans le forcer, ordonne ces 4 actions de la première à la dernière étape à l'aide des flèches.</p>
+      </div>
+
+      <div class="order-list" id="order-container"></div>
+
+      <div class="btn-group">
+        <button class="choice-btn" style="background: var(--teal); border-color: var(--teal); color: #fff;" onclick="checkOrderGame3()">Vérifier l'ordre des étapes</button>
+      </div>
+
+      <div class="feedback-box" id="g3-feedback"></div>
+    </section>
+
+    <!-- BILAN FINAL SANS BADGE -->
+    <section class="summary-card" id="summary-section">
+      <h2 style="color: var(--navy); font-size: 1.6rem;">Entraînement Officiel Terminé !</h2>
+      <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto; line-height: 1.5;">
+        Tu as acquis les réflexes clés pour contrer le harcèlement moral et l'isolement. L'empathie est notre plus grande force, et la réussite repose sur l'alliance de tous : élèves, parents et adultes de l'école.
+      </p>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <strong>1. Repérer le mal moral</strong>
+          <p>Le harcèlement moral vise la tête et le cœur pour détruire l'estime de soi, même sans contact physique.</p>
+        </div>
+        <div class="summary-item">
+          <strong>2. Agir en sécurité</strong>
+          <p>Ne jamais se mettre en danger : si la situation est violente ou menaçante, chercher immédiatement un adulte.</p>
+        </div>
+        <div class="summary-item">
+          <strong>3. Les mots qui guérissent</strong>
+          <p>Rappeler à la victime que les attaques sont fausses, lui offrir son amitié et lui proposer d'aller voir un adulte ensemble.</p>
+        </div>
+        <div class="summary-item">
+          <strong>4. Refuser l'exclusion</strong>
+          <p>Le pire harcèlement est parfois le silence ou le rejet : refuser de laisser un élève seul à la récréation.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 15px;">
+        <button class="choice-btn" onclick="restartAll()">Recommencer la mission</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    /* JEU 1 : Évident vs Discret */
+    const g1Questions = [
+      {
+        text: "Un élève reçoit des remarques dégradantes et des insultes directes à chaque fois qu'il prend la parole en classe.",
+        correct: "evident",
+        goodFeedback: "Cette situation relève d'une attaque évidente : les insultes et commentaires méprisants sont audibles et clairement repérables.",
+        badFeedback: "Ce n'est pas une attaque discrète : les insultes et moqueries directes font partie des attaques évidentes et visibles."
+      },
+      {
+        text: "À chaque récréation, un groupe s'organise pour empêcher un élève de participer aux jeux et persuade les autres de l'ignorer totalement.",
+        correct: "discret",
+        goodFeedback: "Cette situation relève d'une attaque discrète : l'isolation sociale et le silence organisé coupent la cible de ses soutiens de façon insidieuse.",
+        badFeedback: "Ce n'est pas une attaque évidente : couper quelqu'un de ses camarades par l'ignorance est une violence discrète, mais tout aussi destructrice."
+      },
+      {
+        text: "Un camarade fait l'objet de critiques constantes et de remarques répétées sur son apparence vestimentaire tout au long de la journée.",
+        correct: "evident",
+        goodFeedback: "Cette situation relève d'une attaque évidente : les critiques fréquentes et non constructives s'entendent et s'observent directement.",
+        badFeedback: "Ce n'est pas une attaque cachée : répéter des critiques ouvertes sur l'apparence est une attaque évidente."
+      },
+      {
+        text: "Un élève fait du chantage affectif à un autre en lui disant : « Si tu dis à quelqu'un qu'on ne veut pas de toi, ce sera de ta faute si la classe est punie ».",
+        correct: "discret",
+        goodFeedback: "Cette situation relève d'une attaque discrète : la manipulation, la culpabilisation et le chantage émotionnel sont des pièges cachés.",
+        badFeedback: "Ce n'est pas une attaque évidente : la manipulation psychologique et la culpabilisation constituent une attaque discrète."
+      }
+    ];
+
+    let g1Index = 0;
+    let g1Completed = false;
+
+    /* JEU 2 : Le Code d'Urgence */
+    const g2Questions = [
+      {
+        text: "Dans les toilettes, deux grands bloquent un élève contre le mur avec des gestes menaçants et des intimidations violentes.",
+        correct: "alerter",
+        goodFeedback: "Tu appliques le réflexe ALERTER : la situation est dangereuse et violente, il ne faut pas s'interposer seul mais aller chercher un adulte immédiatement.",
+        badFeedback: "Ce n'est pas la bonne décision : la situation présente un danger direct. L'ambassadeur ne doit pas intervenir seul, il doit immédiatement alerter un adulte."
+      },
+      {
+        text: "Dans le rang, un camarade commence à se moquer méchamment du dessin d'un élève. La situation n'est pas violente physiquement.",
+        correct: "stopper",
+        goodFeedback: "Tu appliques le réflexe STOPPER : la situation est sans danger immédiat pour toi, tu dis « STOP, ce n'est pas drôle ! » d'une voix forte pour casser l'attaque.",
+        badFeedback: "Ce n'est pas le premier réflexe indiqué : comme la situation est sûre et sans danger physique, marquer un STOP clair et ferme permet de couper court aux moqueries."
+      },
+      {
+        text: "L'incident est terminé. L'élève visé reste assis à l'écart, l'air abattu et la tête baissée.",
+        correct: "proteger",
+        goodFeedback: "Tu appliques le réflexe PROTÉGER : dans tous les cas, tu rejoins la victime juste après, tu lui dis « Tu n'es pas seul(e) » et tu l'accompagnes vers un adulte.",
+        badFeedback: "Ce n'est pas l'action demandée : après l'agression, la priorité absolue est de protéger la victime en allant vers elle pour lui apporter ton soutien."
+      }
+    ];
+
+    let g2Index = 0;
+    let g2Completed = false;
+
+    /* JEU 3 : Casser l'isolement */
+    const g3CorrectSteps = [
+      { id: 1, text: "Observer : Repérer un camarade mis à l'écart ou seul sur un banc sans faire de bruit." },
+      { id: 2, text: "Agir contre l'isolement : S'approcher et proposer chaleureusement « Viens jouer avec nous à la récré aujourd'hui »." },
+      { id: 3, text: "Réparer l'estime : Rassurer avec empathie : « Ce qu'ils ont dit est totalement faux, moi je te trouve super »." },
+      { id: 4, text: "Accompagner : Proposer en douceur : « Si tu veux en parler à un adulte, je peux t'accompagner, on ira à deux »." }
+    ];
+
+    let g3CurrentList = [
+      g3CorrectSteps[2],
+      g3CorrectSteps[0],
+      g3CorrectSteps[3],
+      g3CorrectSteps[1]
+    ];
+    let g3Completed = false;
+
+    /* GESTION NAVIGATION */
+    function switchGame(gameNum) {
+      document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('summary-section').style.display = 'none';
+
+      document.getElementById('game-' + gameNum).classList.add('active');
+      document.getElementById('tab-btn-' + gameNum).classList.add('active');
+    }
+
+    /* GESTION JEU 1 */
+    function renderGame1() {
+      const q = g1Questions[g1Index];
+      document.getElementById('g1-text').innerText = q.text;
+      const fb = document.getElementById('g1-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+      document.getElementById('g1-next').style.display = 'none';
+      document.getElementById('g1-btn-evident').disabled = false;
+      document.getElementById('g1-btn-discret').disabled = false;
+    }
+
+    function answerGame1(choice) {
+      const q = g1Questions[g1Index];
+      const fb = document.getElementById('g1-feedback');
+      document.getElementById('g1-btn-evident').disabled = true;
+      document.getElementById('g1-btn-discret').disabled = true;
+
+      if (choice === q.correct) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = q.badFeedback;
+      }
+
+      document.getElementById('g1-next').style.display = 'block';
+    }
+
+    function nextGame1() {
+      g1Index++;
+      if (g1Index < g1Questions.length) {
+        renderGame1();
+      } else {
+        g1Completed = true;
+        document.getElementById('status-1').innerText = 'Validé ✓';
+        document.getElementById('status-1').style.color = 'var(--green)';
+        document.getElementById('status-2').innerText = 'En cours';
+        switchGame(2);
+        checkAllCompleted();
+      }
+    }
+
+    /* GESTION JEU 2 */
+    function renderGame2() {
+      const q = g2Questions[g2Index];
+      document.getElementById('g2-text').innerText = q.text;
+      const fb = document.getElementById('g2-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+      document.getElementById('g2-next').style.display = 'none';
+      document.querySelectorAll('#game-2 .choice-btn').forEach(btn => btn.disabled = false);
+    }
+
+    function answerGame2(choice) {
+      const q = g2Questions[g2Index];
+      const fb = document.getElementById('g2-feedback');
+      document.querySelectorAll('#game-2 .choice-btn').forEach(btn => btn.disabled = true);
+
+      if (choice === q.correct) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = q.badFeedback;
+      }
+
+      document.getElementById('g2-next').style.display = 'block';
+    }
+
+    function nextGame2() {
+      g2Index++;
+      if (g2Index < g2Questions.length) {
+        renderGame2();
+      } else {
+        g2Completed = true;
+        document.getElementById('status-2').innerText = 'Validé ✓';
+        document.getElementById('status-2').style.color = 'var(--green)';
+        document.getElementById('status-3').innerText = 'En cours';
+        switchGame(3);
+        checkAllCompleted();
+      }
+    }
+
+    /* GESTION JEU 3 */
+    function renderGame3() {
+      const container = document.getElementById('order-container');
+      container.innerHTML = '';
+
+      g3CurrentList.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'order-item';
+        row.innerHTML = `
+          <div class="order-item-content"><strong>Étape ${idx + 1} :</strong> ${item.text}</div>
+          <div class="order-arrows">
+            <button class="arrow-btn" onclick="moveStep(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
+            <button class="arrow-btn" onclick="moveStep(${idx}, 1)" ${idx === g3CurrentList.length - 1 ? 'disabled' : ''}>▼</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function moveStep(index, direction) {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= g3CurrentList.length) return;
+      const temp = g3CurrentList[index];
+      g3CurrentList[index] = g3CurrentList[targetIndex];
+      g3CurrentList[targetIndex] = temp;
+      renderGame3();
+      const fb = document.getElementById('g3-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+    }
+
+    function checkOrderGame3() {
+      const fb = document.getElementById('g3-feedback');
+      let isCorrect = true;
+
+      for (let i = 0; i < g3CorrectSteps.length; i++) {
+        if (g3CurrentList[i].id !== g3CorrectSteps[i].id) {
+          isCorrect = false;
+          break;
+        }
+      }
+
+      if (isCorrect) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = "Ordre parfait : en repérant d'abord l'élève seul, en l'invitant à jouer, en restaurant son estime puis en lui proposant d'aller voir un adulte à deux, tu appliques exactement le rôle d'ambassadeur bienveillant.";
+        g3Completed = true;
+        document.getElementById('status-3').innerText = 'Validé ✓';
+        document.getElementById('status-3').style.color = 'var(--green)';
+        setTimeout(() => {
+          showFinalSummary();
+        }, 1200);
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = "L'ordre n'est pas encore le bon. Réfléchis : commence par observer le camarade, propose-lui de rejoindre le jeu, réconforte-le avec des mots bienveillants, puis propose-lui de l'accompagner vers un adulte.";
+      }
+    }
+
+    function showFinalSummary() {
+      document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+      document.getElementById('summary-section').style.display = 'flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function checkAllCompleted() {
+      if (g1Completed && g2Completed && g3Completed) {
+        showFinalSummary();
+      }
+    }
+
+    function restartAll() {
+      g1Index = 0;
+      g2Index = 0;
+      g1Completed = false;
+      g2Completed = false;
+      g3Completed = false;
+
+      g3CurrentList = [
+        g3CorrectSteps[2],
+        g3CorrectSteps[0],
+        g3CorrectSteps[3],
+        g3CorrectSteps[1]
+      ];
+
+      document.getElementById('status-1').innerText = 'En cours';
+      document.getElementById('status-1').style.color = 'var(--text-muted)';
+      document.getElementById('status-2').innerText = 'En attente';
+      document.getElementById('status-2').style.color = 'var(--text-muted)';
+      document.getElementById('status-3').innerText = 'En attente';
+      document.getElementById('status-3').style.color = 'var(--text-muted)';
+
+      renderGame1();
+      renderGame2();
+      renderGame3();
+      switchGame(1);
+    }
+
+    // Lancement
+    renderGame1();
+    renderGame2();
+    renderGame3();
+  </script>
+</body>
+</html>
