@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Carnet de Bord de l'Élève Ambassadeur</title>
+  <style>
+    :root {
+      --primary: #4338ca;
+      --primary-light: #6366f1;
+      --primary-soft: #eef2ff;
+      --secondary: #0284c7;
+      --secondary-soft: #e0f2fe;
+      --amber: #f59e0b;
+      --amber-soft: #fef3c7;
+      --emerald: #10b981;
+      --emerald-soft: #d1fae5;
+      --rose: #f43f5e;
+      --rose-soft: #ffe4e6;
+      --slate-800: #1e293b;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-200: #e2e8f0;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --card-bg: #ffffff;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --shadow: 0 10px 25px -5px rgba(30, 41, 59, 0.08), 0 8px 10px -6px rgba(30, 41, 59, 0.04);
+      --shadow-hover: 0 20px 25px -5px rgba(67, 56, 202, 0.15), 0 10px 10px -5px rgba(67, 56, 202, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Comic Neue', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0f7ff 0%, #eef2ff 50%, #fdf4ff 100%);
+      color: var(--slate-800);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--slate-200);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      background: linear-gradient(135deg, #f59e0b, #ec4899, #6366f1);
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: 0 6px 14px rgba(245, 158, 11, 0.25);
+    }
+
+    .brand-text h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--slate-800);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-text p {
+      font-size: 0.82rem;
+      color: var(--slate-600);
+      font-weight: 500;
+    }
+
+    .header-progress {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 14px;
+      background: var(--slate-200);
+      border-radius: 999px;
+      overflow: hidden;
+      padding: 2px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #06b6d4, #6366f1);
+      border-radius: 999px;
+      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .progress-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    main {
+      flex: 1;
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    .carnet-banner {
+      background: linear-gradient(135deg, #4338ca, #3b82f6);
+      color: white;
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carnet-banner::after {
+      content: '🌉';
+      position: absolute;
+      right: 20px;
+      bottom: -15px;
+      font-size: 6rem;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .carnet-banner h2 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .carnet-banner p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      max-width: 820px;
+      line-height: 1.5;
+    }
+
+    .formula-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-top: 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 6px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+      overflow-x: auto;
+      border: 1px solid var(--slate-200);
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+
+    .nav-btn {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px 16px;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--slate-600);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.12);
+    }
+
+    .nav-btn:hover:not(.active) {
+      color: var(--primary-light);
+      background: rgba(255,255,255,0.5);
+    }
+
+    .tab-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--slate-200);
+      font-size: 0.78rem;
+      color: var(--slate-600);
+      font-weight: 800;
+    }
+
+    .tab-badge.done {
+      background: var(--emerald);
+      color: white;
+    }
+
+    .game-section {
+      display: none;
+      animation: tabFadeIn 0.35s ease;
+    }
+    .game-section.active {
+      display: block;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 30px;
+      border: 2px solid var(--slate-200);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .card-top {
+      border-bottom: 2px solid var(--slate-100);
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+    }
+
+    .step-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--primary-soft);
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--slate-800);
+    }
+
+    .card-subtitle {
+      font-size: 0.95rem;
+      color: var(--slate-600);
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--slate-600);
+    }
+
+    .score-badge {
+      background: var(--amber-soft);
+      color: #92400e;
+      padding: 4px 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .game1-situation {
+      background: linear-gradient(135deg, #ffffff 0%, var(--slate-50) 100%);
+      border: 3px dashed var(--slate-300);
+      border-radius: var(--radius);
+      padding: 26px 20px;
+      text-align: center;
+      margin-bottom: 24px;
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .game1-phrase {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--slate-800);
+      max-width: 650px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .game1-hint {
+      font-size: 0.85rem;
+      color: var(--slate-500);
+      font-weight: 500;
+    }
+
+    .decision-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .btn-decision {
+      padding: 20px 18px;
+      border: 3px solid var(--slate-200);
+      border-radius: var(--radius);
+      background: white;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-decision:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+    }
+
+    .btn-decision.role:hover:not(:disabled) {
+      border-color: var(--emerald);
+      background: var(--emerald-soft);
+    }
+
+    .btn-decision.limit:hover:not(:disabled) {
+      border-color: var(--rose);
+      background: var(--rose-soft);
+    }
+
+    .decision-icon {
+      font-size: 2rem;
+    }
+
+    .decision-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--slate-800);
+    }
+
+    .decision-subtitle {
+      font-size: 0.82rem;
+      color: var(--slate-500);
+      line-height: 1.3;
+    }
+
+    .feedback-panel {
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-top: 18px;
+      display: none;
+      animation: panelSlide 0.3s ease;
+    }
+    .feedback-panel.visible {
+      display: block;
+    }
+
+    @keyframes panelSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feedback-panel.good {
+      background: #ecfdf5;
+      border: 2px solid #6ee7b7;
+      color: #065f46;
+    }
+
+    .feedback-panel.wrong {
+      background: #fff1f2;
+      border: 2px solid #fda4af;
+      color: #9f1239;
+    }
+
+    .feedback-header {
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .feedback-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .btn-action {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 13px 26px;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      transition: all 0.2s ease;
+    }
+    .btn-action:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(67, 56, 202, 0.25);
+    }
+
+    .power-formula-banner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      align-items: center;
+      background: var(--slate-100);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 22px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .power-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--slate-200);
+      color: var(--slate-800);
+    }
+
+    .scenario-box {
+      background: var(--slate-50);
+      border-left: 5px solid var(--secondary);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .scenario-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .scenario-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      line-height: 1.45;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn-option {
+      background: white;
+      border: 2px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-option:hover:not(:disabled) {
+      border-color: var(--primary-light);
+      background: var(--primary-soft);
+      transform: translateX(4px);
+    }
+
+    .opt-key {
+      background: var(--slate-100);
+      color: var(--slate-600);
+      font-weight: 800;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .opt-content {
+      flex: 1;
+    }
+
+    .opt-power-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--slate-800);
+      margin-bottom: 2px;
+    }
+
+    .opt-action-desc {
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      line-height: 1.35;
+    }
+
+    .btn-option.selected-good {
+      border-color: var(--emerald);
+      background: var(--emerald-soft);
+    }
+    .btn-option.selected-good .opt-key {
+      background: var(--emerald);
+      color: white;
+    }
+
+    .btn-option.selected-bad {
+      border-color: var(--rose);
+      background: var(--rose-soft);
+    }
+    .btn-option.selected-bad .opt-key {
+      background: var(--rose);
+      color: white;
+    }
+
+    .bridge-explainer {
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+      border: 2px solid #bae6fd;
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .bridge-icon-big {
+      font-size: 2.2rem;
+    }
+
+    .bridge-explainer-text h4 {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #0369a1;
+      margin-bottom: 3px;
+    }
+
+    .bridge-explainer-text p {
+      font-size: 0.88rem;
+      color: #0f172a;
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .step-item {
+      background: white;
+      border: 2px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      transition: all 0.2s ease;
+    }
+
+    .step-item:hover {
+      border-color: var(--primary-light);
+    }
+
+    .step-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .step-order-badge {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 800;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .step-title-text {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--slate-800);
+    }
+
+    .step-subtext {
+      font-size: 0.82rem;
+      color: var(--slate-500);
+      margin-top: 2px;
+    }
+
+    .step-arrow-controls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-arrow {
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--slate-600);
+      transition: all 0.15s ease;
+    }
+
+    .btn-arrow:hover:not(:disabled) {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .btn-arrow:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .diploma-card {
+      text-align: center;
+      padding: 30px;
+      background: #ffffff;
+      border: 6px double #c7d2fe;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .badge-ribbon {
+      font-size: 4rem;
+      margin-bottom: 10px;
+      display: inline-block;
+      animation: floatBadge 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatBadge {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-8px) rotate(3deg); }
+    }
+
+    .diploma-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .diploma-school {
+      font-size: 1rem;
+      color: var(--slate-600);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .student-input-container {
+      max-width: 440px;
+      margin: 0 auto 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .student-input-label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--slate-600);
+    }
+
+    .student-name-input {
+      padding: 12px 16px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: 2px solid var(--slate-300);
+      border-radius: var(--radius-sm);
+      outline: none;
+      text-align: center;
+      color: var(--primary);
+      transition: border-color 0.2s;
+    }
+    .student-name-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+
+    .diploma-powers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      max-width: 720px;
+      margin: 0 auto 24px;
+      text-align: left;
+    }
+
+    .diploma-power-item {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pierre-callout {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 2px dashed #f59e0b;
+      border-radius: var(--radius-sm);
+      padding: 18px 24px;
+      max-width: 680px;
+      margin: 0 auto 24px;
+      color: #92400e;
+      font-weight: 700;
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .certif-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-print {
+      background: #0f172a;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-print:hover {
+      background: #334155;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      header, .nav-tabs, .carnet-banner, .btn-print, .certif-actions, .student-input-container {
+        display: none !important;
+      }
+      main {
+        padding: 0;
+        max-width: 100%;
+      }
+      .game-section {
+        display: none !important;
+      }
+      #sectionSummary {
+        display: block !important;
+      }
+      .diploma-card {
+        box-shadow: none;
+        border: 4px double #4338ca;
+        padding: 40px;
+      }
+      .printed-student-name {
+        display: block !important;
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: #4338ca;
+        margin-bottom: 16px;
+      }
+    }
+
+    .printed-student-name {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .decision-buttons {
+        grid-template-columns: 1fr;
+      }
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-progress {
+        max-width: 100%;
+      }
+      .card {
+        padding: 20px;
+      }
+      .nav-btn {
+        min-width: 140px;
+        font-size: 0.82rem;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">📒</div>
+        <div class="brand-text">
+          <h1>Carnet de Bord de l'Ambassadeur</h1>
+          <p>École Bienveillante • Zéro Exclusion</p>
+        </div>
+      </div>
+      <div class="header-progress">
+        <div class="progress-track">
+          <div class="progress-fill" id="globalProgressBar"></div>
+        </div>
+        <span class="progress-label" id="globalProgressText">0 / 3 étapes validées</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="carnet-banner">
+      <h2>Bienvenue dans ton carnet d'entraînement officiel ! 🌟</h2>
+      <p>
+        Être élève ambassadeur, c'est devenir <strong>une passerelle solide</strong> entre tes camarades et les adultes de l'école. Tu gardes un regard attentif, tu réconfortes sans juger, et tu préviens les adultes en toute confiance !
+      </p>
+      <div class="formula-tag">
+        ✨ L'équation du super-pouvoir = (Empathie + Solidarité + Courage) × Équipe
+      </div>
+    </div>
+
+    <nav class="nav-tabs" aria-label="Navigation des jeux">
+      <button class="nav-btn active" id="tabGame1" onclick="switchGame(1)">
+        <span class="tab-badge" id="badgeGame1">1</span>
+        <span>Jeu 1 : Rôles & Limites</span>
+      </button>
+      <button class="nav-btn" id="tabGame2" onclick="switchGame(2)">
+        <span class="tab-badge" id="badgeGame2">2</span>
+        <span>Jeu 2 : L'Équation Super-Pouvoir</span>
+      </button>
+      <button class="nav-btn" id="tabGame3" onclick="switchGame(3)">
+        <span class="tab-badge" id="badgeGame3">3</span>
+        <span>Jeu 3 : La Passerelle</span>
+      </button>
+      <button class="nav-btn" id="tabGameSummary" onclick="switchGame(4)">
+        <span class="tab-badge" id="badgeSummary">🎓</span>
+        <span>Mon Badge</span>
+      </button>
+    </nav>
+
+    <section id="sectionGame1" class="game-section active">
+      <div class="card">
+        <div class="card-top">
+          <span class="step-pill">Mission 1 • Slide 2 & 3 du carnet</span>
+          <h3 class="card-title">Mes Vrais Pouvoirs vs Mes Limites</h3>
+          <p class="card-subtitle">
+            Un ambassadeur aide avec son cœur tout en restant pleinement un élève. Il n'est <strong>ni un surveillant qui fait la police</strong>, <strong>ni un justicier</strong>. Pour chaque carte, décide s'il s'agit de ton rôle ou de tes limites !
+          </p>
+        </div>
+
+        <div class="status-row">
+          <span>Situation <b id="g1-current-num">1</b> sur <b id="g1-total-num">7</b></span>
+          <span class="score-badge">⭐ Score : <b id="g1-score">0</b></span>
+        </div>
+
+        <div class="game1-situation" id="g1-situation-box">
+          <div class="game1-phrase" id="g1-text">Chargement de la situation...</div>
+          <div class="game1-hint" id="g1-hint">Que dois-tu faire face à cette action ?</div>
+        </div>
+
+        <div class="decision-buttons" id="g1-buttons">
+          <button class="btn-decision role" onclick="answerGame1('role')">
+            <span class="decision-icon">🛡️</span>
+            <span class="decision-title">C'est mon rôle d'ambassadeur !</span>
+            <span class="decision-subtitle">(Mon super-pouvoir : repérer, écouter, relayer)</span>
+          </button>
+          <button class="btn-decision limit" onclick="answerGame1('limit')">
+            <span class="decision-icon">🛑</span>
+            <span class="decision-title">Ce n'est PAS mon rôle !</span>
+            <span class="decision-subtitle">(Mes limites : je ne me mets pas en danger, les adultes interviennent)</span>
+          </button>
+        </div>
+
+        <!-- Strict separation: either good or wrong feedback is rendered -->
+        <div class="feedback-panel" id="g1-feedback">
+          <div class="feedback-header" id="g1-feedback-header"></div>
+          <div class="feedback-text" id="g1-feedback-text"></div>
+          <button class="btn-action" id="g1-next-btn" onclick="nextGame1()">Situation suivante ➔</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="sectionGame2" class="game-section">
+      <div class="card">
+        <div class="card-top">
+          <span class="step-pill">Mission 2 • Slide 4 & 5 du carnet</span>
+          <h3 class="card-title">Active le bon Super-Pouvoir</h3>
+          <p class="card-subtitle">
+            Pas besoin de cape magique pour faire reculer la solitude et réussir le zéro exclusion ! Choisis l'action qui correspond à la bonne qualité de notre formule.
+          </p>
+        </div>
+
+        <div class="power-formula-banner">
+          <span class="power-badge">❤️ <strong>Empathie</strong> : comprendre l'émotion</span>
+          <span>+</span>
+          <span class="power-badge">🤝 <strong>Solidarité</strong> : tendre la main</span>
+          <span>+</span>
+          <span class="power-badge">🦁 <strong>Courage</strong> : refuser les moqueries</span>
+          <span>×</span>
+          <span class="power-badge" style="background:#eef2ff; border-color:#818cf8; color:#3730a3;">👥 <strong>Équipe</strong> : agir avec l'école</span>
+        </div>
+
+        <div class="status-row">
+          <span>Cas de récréation <b id="g2-current-num">1</b> sur <b id="g2-total-num">4</b></span>
+          <span class="score-badge">⭐ Score : <b id="g2-score">0</b></span>
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-tag" id="g2-scenario-tag">Scénario de récréation</div>
+          <div class="scenario-text" id="g2-scenario-text">Chargement du cas pratique...</div>
+        </div>
+
+        <div class="options-grid" id="g2-options-container">
+          <!-- Dynamically populated options -->
+        </div>
+
+        <div class="feedback-panel" id="g2-feedback">
+          <div class="feedback-header" id="g2-feedback-header"></div>
+          <div class="feedback-text" id="g2-feedback-text"></div>
+          <button class="btn-action" id="g2-next-btn" onclick="nextGame2()">Défi suivant ➔</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="sectionGame3" class="game-section">
+      <div class="card">
+        <div class="card-top">
+          <span class="step-pill">Mission 3 • Slide 2 & 6 du carnet</span>
+          <h3 class="card-title">La Passerelle : Les 4 Étapes dans l'Ordre</h3>
+          <p class="card-subtitle">
+            Quand tu repères un camarade triste ou en difficulté, dans quel ordre dois-tu franchir la passerelle ? Utilise les boutons (▲ Monter / ▼ Descendre) pour ranger ces 4 réflexes d'or.
+          </p>
+        </div>
+
+        <div class="bridge-explainer">
+          <div class="bridge-icon-big">🌉</div>
+          <div class="bridge-explainer-text">
+            <h4>La règle de la passerelle solide :</h4>
+            <p>Tu es ce lien magique entre tes copains et les adultes. Tu observes, tu soutiens avec chaleur sans juger, puis tu traverses pour prévenir en toute confiance !</p>
+          </div>
+        </div>
+
+        <div class="steps-list" id="bridgeStepsList">
+          <!-- Dynamically populated reorder steps -->
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div style="font-size:0.85rem; color:var(--slate-500); font-weight:600;">
+            💡 Vérifie bien que l'observation vient toujours avant l'action !
+          </div>
+          <button class="btn-action" style="margin-top:0;" onclick="validateBridgeOrder()">
+            Vérifier ma passerelle ➔
+          </button>
+        </div>
+
+        <div class="feedback-panel" id="g3-feedback">
+          <div class="feedback-header" id="g3-feedback-header"></div>
+          <div class="feedback-text" id="g3-feedback-text"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sectionSummary" class="game-section">
+      <div class="diploma-card">
+        <div class="badge-ribbon">🎖️</div>
+        <h2 class="diploma-title">Félicitations, Élève Ambassadeur !</h2>
+        <p class="diploma-school">Carnet de bord officiel de l'école • Mission Sérénité & Climat Scolaire</p>
+
+        <div class="student-input-container">
+          <label class="student-input-label" for="studentNameInput">Inscris ton prénom pour personnaliser ton attestation :</label>
+          <input type="text" id="studentNameInput" class="student-name-input" placeholder="Ex: Lucas, Sarah, Camille..." oninput="updateDiplomaName()">
+        </div>
+
+        <div class="printed-student-name" id="printedStudentNameLabel">Ambassadeur Officiel</div>
+
+        <div class="diploma-powers-grid">
+          <div class="diploma-power-item">
+            <span>❤️</span>
+            <div><strong>Empathie validée :</strong> Écoute chaleureuse sans jamais juger.</div>
+          </div>
+          <div class="diploma-power-item">
+            <span>🤝</span>
+            <div><strong>Solidarité validée :</strong> Zéro exclusion et inclusion aux jeux.</div>
+          </div>
+          <div class="diploma-power-item">
+            <span>🦁</span>
+            <div><strong>Courage validé :</strong> Refus catégorique des moqueries.</div>
+          </div>
+          <div class="diploma-power-item">
+            <span>👥</span>
+            <div><strong>Passerelle solide :</strong> Relais direct vers les adultes de l'école.</div>
+          </div>
+        </div>
+
+        <div class="pierre-callout">
+          <div style="font-size:2rem;">👋</div>
+          <div>
+            « Si vous avez envie de faire la différence dès aujourd'hui, venez en parler à <strong>Pierre</strong> sans hésiter. Votre présence change tout ! »
+          </div>
+        </div>
+
+        <div class="certif-actions">
+          <button class="btn-print" onclick="window.print()">
+            🖨️ Imprimer mon carnet de bord
+          </button>
+          <button class="btn-action" style="margin-top:0;" onclick="restartAll()">
+            🔄 Recommencer l'entraînement
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /* --- DATA JEU 1 : ROLES VS LIMITES --- */
+    const game1Data = [
+      {
+        text: "Repérer un copain isolé ou triste assis seul sur un banc pendant la récréation.",
+        expected: "role",
+        goodFeedback: "Exactement ! Tu as l'œil attentif. Repérer la solitude pour offrir une présence bienveillante est au cœur de ta mission.",
+        badFeedback: "Ce n'est pas tout à fait ça. C'est bien <strong>ton rôle d'ambassadeur</strong> ! Tu as ce regard précieux pour repérer ceux qui ont besoin d'un sourire ou d'un copain."
+      },
+      {
+        text: "Faire la police, surveiller les couloirs et donner des punitions aux élèves.",
+        expected: "limit",
+        goodFeedback: "Excellente réponse ! Tu n'es ni un surveillant ni un policier de la cour. Les punitions et l'autorité restent à 100% le rôle des adultes.",
+        badFeedback: "Ce n'est pas tout à fait ça. Attention : ce n'est <strong>PAS ton rôle</strong> ! Le diaporama le rappelle : tu n'es ni un surveillant qui fait la police, ni chargé de punir."
+      },
+      {
+        text: "Offrir une présence chaleureuse et réconfortante à un camarade sans jamais le juger.",
+        expected: "role",
+        goodFeedback: "Bravo ! Être une oreille attentive et amicale, sans jugement, est l'un de tes plus beaux pouvoirs d'ambassadeur.",
+        badFeedback: "Ce n'est pas tout à fait ça. C'est bien <strong>ton rôle d'ambassadeur</strong> ! Donner une parole bienveillante permet à l'autre de se sentir rassuré et compris."
+      },
+      {
+        text: "Me jeter au milieu d'une bagarre violente pour séparer moi-même les élèves.",
+        expected: "limit",
+        goodFeedback: "Très bon réflexe de sécurité ! Tu n'es pas un justicier et tu ne dois jamais te mettre en danger physique. Tu vas immédiatement chercher un maître ou une maîtresse.",
+        badFeedback: "Ce n'est pas tout à fait ça. C'est une <strong>limite essentielle</strong> ! Tu ne dois JAMAIS te mettre en danger ni agir en justicier. Ce sont toujours les adultes qui interviennent dans les bagarres."
+      },
+      {
+        text: "Traverser le pont pour prévenir les maîtres et maîtresses en toute confiance quand une situation est injuste.",
+        expected: "role",
+        goodFeedback: "Parfait ! Tu es la passerelle solide. Prévenir les adultes permet de protéger tes camarades sans porter le poids tout seul.",
+        badFeedback: "Ce n'est pas tout à fait ça. C'est au contraire <strong>ta mission essentielle</strong> ! Traverser le pont pour prévenir les adultes protège l'école sans faire de toi un rapporteur."
+      },
+      {
+        text: "Garder un secret dangereux parce qu'un camarade a peur et promettre de ne rien dire à personne.",
+        expected: "limit",
+        goodFeedback: "Très bien compris ! Face à une situation dangereuse ou douloureuse, l'ambassadeur ne s'enferme jamais dans un secret. Il explique gentiment qu'un adulte doit être prévenu.",
+        badFeedback: "Ce n'est pas tout à fait ça. C'est une <strong>limite très importante</strong> ! Tu ne dois jamais garder un secret qui met un camarade en danger. Ton rôle est d'être la passerelle qui libère la parole."
+      },
+      {
+        text: "Inviter un camarade seul à rejoindre ton jeu à la récréation (objectif zéro exclusion).",
+        expected: "role",
+        goodFeedback: "Superbe ! C'est ainsi que la solitude recule tout de suite dans la cour : en ouvrant son jeu et son cœur.",
+        badFeedback: "Ce n'est pas tout à fait ça. C'est exactement <strong>ton rôle d'ambassadeur</strong> ! Proposer d'intégrer une partie de jeu permet d'atteindre le 100 % sérénité et le zéro exclusion."
+      }
+    ];
+
+    /* --- DATA JEU 2 : L'ÉQUATION DU SUPER-POUVOIR --- */
+    const game2Data = [
+      {
+        tag: "Défi 1 • Comprendre les émotions",
+        scenario: "Pendant la récréation, tu remarques que Lina est assise à l'écart derrière les arbres, les larmes aux yeux, la tête baissée.",
+        options: [
+          {
+            key: "A",
+            name: "L'Empathie",
+            text: "Je m'approche doucement d'elle, je m'assois à ses côtés et je lui dis avec douceur : 'Je vois que tu as l'air triste, tu veux qu'on reste ensemble ou m'expliquer ce qui ne va pas ?'",
+            correct: true,
+            feedback: "Bravo ! Tu as activé le pouvoir de <strong>l'Empathie</strong> ! Tu comprends son émotion sans la forcer et tu lui offres une présence rassurante."
+          },
+          {
+            key: "B",
+            name: "L'Indifférence",
+            text: "Je continue ma partie de bille car si elle pleure cachée, c'est sûrement qu'elle veut qu'on la laisse tranquille.",
+            correct: false,
+            feedback: "Attention : ce n'est pas la bonne attitude. L'ambassadeur a un regard attentif et ne laisse pas un camarade seul dans sa détresse."
+          },
+          {
+            key: "C",
+            name: "L'Interrogatoire",
+            text: "Je crie devant tout le monde : 'Pourquoi tu pleures Lina ? Qui t'a embêtée ? Dis-le-moi tout de suite !'",
+            correct: false,
+            feedback: "Attention : cela risque de la bloquer et de lui faire honte. L'empathie demande du calme, de la douceur et de la discrétion."
+          }
+        ]
+      },
+      {
+        tag: "Défi 2 • Tendre la main (Zéro Exclusion)",
+        scenario: "Sur le terrain de foot ou au jeu du loup, un élève timide regarde la partie avec envie depuis 10 minutes mais personne ne lui passe le ballon.",
+        options: [
+          {
+            key: "A",
+            name: "L'Exclusion",
+            text: "Je dis aux autres : 'On est déjà au complet, s'il joue on sera trop nombreux dans l'équipe.'",
+            correct: false,
+            feedback: "Attention : cela crée de l'exclusion. L'ambassadeur défend la convivialité et fait reculer la solitude dans l'école."
+          },
+          {
+            key: "B",
+            name: "La Solidarité",
+            text: "Je vais vers lui avec le ballon, je lui souris et je dis : 'Viens dans notre équipe, on a besoin d'un coéquipier !'",
+            correct: true,
+            feedback: "Bravo ! Tu as activé le pouvoir de <strong>la Solidarité</strong> ! Concrètement, c'est toi qui permets le zéro exclusion en tendant la main."
+          },
+          {
+            key: "C",
+            name: "La Compassion passive",
+            text: "Je me dis dans ma tête 'C'est dommage pour lui' mais je continue sans rien proposer.",
+            correct: false,
+            feedback: "Attention : la solidarité est une action concrète ! Être ambassadeur, c'est oser faire le premier pas pour inviter les autres."
+          }
+        ]
+      },
+      {
+        tag: "Défi 3 • Refuser les moqueries",
+        scenario: "Deux élèves se moquent ouvertement du nouveau pull troué d'un camarade de CE2 et commencent à rire en le pointant du doigt.",
+        options: [
+          {
+            key: "A",
+            name: "L'Effet de groupe",
+            text: "Je ris avec eux pour ne pas être rejeté par le groupe de copains.",
+            correct: false,
+            feedback: "Attention : rire des moqueries alimente la blessure de l'élève. L'ambassadeur ne suit jamais les moqueries des autres."
+          },
+          {
+            key: "B",
+            name: "Le Courage",
+            text: "J'interviens calmement et fermement : 'Arrêtez, ce n'est ni drôle ni respectueux de se moquer de lui.' Puis je me place aux côtés du camarade.",
+            correct: true,
+            feedback: "Bravo ! Tu as activé le pouvoir du <strong>Courage</strong> ! Tu as osé refuser les moqueries et libérer la parole pour protéger le respect dans l'école."
+          },
+          {
+            key: "C",
+            name: "La Vengeance",
+            text: "J'insulte à mon tour les deux élèves pour leur donner une bonne leçon.",
+            correct: false,
+            feedback: "Attention : répondre par la violence ou l'insulte aggrave le problème. L'ambassadeur donne un exemple de respect au quotidien."
+          }
+        ]
+      },
+      {
+        tag: "Défi 4 • Agir main dans la main avec toute l'école",
+        scenario: "Un élève de la classe te confie que depuis plusieurs jours, des grands le bousculent chaque matin près des toilettes.",
+        options: [
+          {
+            key: "A",
+            name: "L'Équipe",
+            text: "Je le rassure et je lui propose : 'On ne va pas rester seuls avec ça. Traversons le pont ensemble pour en parler à la maîtresse ou à Pierre en toute confiance.'",
+            correct: true,
+            feedback: "Bravo ! Tu as activé le multiplicateur de <strong>l'Équipe</strong> ! Vous agissez main dans la main avec les adultes, personne ne reste isolé face au problème."
+          },
+          {
+            key: "B",
+            name: "Le Justicier solitaire",
+            text: "Je lui dis de ne rien dire aux adultes et que demain matin, je vais aller menacer les grands moi-même.",
+            correct: false,
+            feedback: "Attention : tu ne dois jamais agir tout seul ni en justicier ! L'ambassadeur prévient toujours l'équipe des adultes de l'école."
+          },
+          {
+            key: "C",
+            name: "L'Abandon",
+            text: "Je lui réponds : 'C'est ton problème, débrouille-toi tout seul avec eux.'",
+            correct: false,
+            feedback: "Attention : l'ambassadeur est un repère rassurant. Il ne laisse jamais un camarade désemparé face à la violence."
+          }
+        ]
+      }
+    ];
+
+    /* --- DATA JEU 3 : LA PASSERELLE DES ÉTAPES --- */
+    const bridgeStepsCorrect = [
+      { id: 1, title: "1. Regard attentif", desc: "Repérer un copain isolé, triste ou une injustice dans la cour." },
+      { id: 2, title: "2. Présence chaleureuse", desc: "Offrir une parole bienveillante et écouter sans jamais juger." },
+      { id: 3, title: "3. Traverser le pont", desc: "Prévenir les maîtres, maîtresses ou Pierre en toute confiance." },
+      { id: 4, title: "4. Zéro exclusion", desc: "Inviter le camarade à jouer pour que chacun vienne à l'école avec le sourire." }
+    ];
+
+    // Shuffled copy for player
+    let bridgeCurrentSteps = [
+      bridgeStepsCorrect[2],
+      bridgeStepsCorrect[0],
+      bridgeStepsCorrect[3],
+      bridgeStepsCorrect[1]
+    ];
+
+    let g1Index = 0;
+    let g1Score = 0;
+    let g1Completed = false;
+
+    let g2Index = 0;
+    let g2Score = 0;
+    let g2Completed = false;
+
+    let g3Completed = false;
+
+    function updateProgress() {
+      let count = 0;
+      if (g1Completed) count++;
+      if (g2Completed) count++;
+      if (g3Completed) count++;
+
+      const pct = Math.round((count / 3) * 100);
+      document.getElementById('globalProgressBar').style.width = pct + '%';
+      document.getElementById('globalProgressText').textContent = `${count} / 3 étapes validées`;
+
+      if (g1Completed) {
+        const b = document.getElementById('badgeGame1');
+        b.classList.add('done');
+        b.textContent = '✓';
+      }
+      if (g2Completed) {
+        const b = document.getElementById('badgeGame2');
+        b.classList.add('done');
+        b.textContent = '✓';
+      }
+      if (g3Completed) {
+        const b = document.getElementById('badgeGame3');
+        b.classList.add('done');
+        b.textContent = '✓';
+      }
+
+      if (count === 3) {
+        document.getElementById('badgeSummary').classList.add('done');
+      }
+    }
+
+    function switchGame(stepNum) {
+      document.querySelectorAll('.game-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+      if (stepNum === 1) {
+        document.getElementById('sectionGame1').classList.add('active');
+        document.getElementById('tabGame1').classList.add('active');
+      } else if (stepNum === 2) {
+        document.getElementById('sectionGame2').classList.add('active');
+        document.getElementById('tabGame2').classList.add('active');
+      } else if (stepNum === 3) {
+        document.getElementById('sectionGame3').classList.add('active');
+        document.getElementById('tabGame3').classList.add('active');
+      } else if (stepNum === 4) {
+        document.getElementById('sectionSummary').classList.add('active');
+        document.getElementById('tabGameSummary').classList.add('active');
+      }
+    }
+
+    function loadGame1() {
+      const q = game1Data[g1Index];
+      document.getElementById('g1-current-num').textContent = g1Index + 1;
+      document.getElementById('g1-total-num').textContent = game1Data.length;
+      document.getElementById('g1-text').textContent = `« ${q.text} »`;
+
+      const btns = document.querySelectorAll('#g1-buttons .btn-decision');
+      btns.forEach(b => b.disabled = false);
+
+      const panel = document.getElementById('g1-feedback');
+      panel.className = 'feedback-panel';
+      panel.classList.remove('visible');
+    }
+
+    function answerGame1(userChoice) {
+      const q = game1Data[g1Index];
+      const btns = document.querySelectorAll('#g1-buttons .btn-decision');
+      btns.forEach(b => b.disabled = true);
+
+      const panel = document.getElementById('g1-feedback');
+      const header = document.getElementById('g1-feedback-header');
+      const body = document.getElementById('g1-feedback-text');
+
+      if (userChoice === q.expected) {
+        g1Score++;
+        document.getElementById('g1-score').textContent = g1Score;
+        panel.className = 'feedback-panel visible good';
+        header.innerHTML = '✅ Bravo ! C\'est parfaitement analysé !';
+        body.innerHTML = q.goodFeedback;
+      } else {
+        panel.className = 'feedback-panel visible wrong';
+        header.innerHTML = '❌ Ce n\'est pas tout à fait ça...';
+        body.innerHTML = q.badFeedback;
+      }
+    }
+
+    function nextGame1() {
+      if (g1Index < game1Data.length - 1) {
+        g1Index++;
+        loadGame1();
+      } else {
+        g1Completed = true;
+        updateProgress();
+        switchGame(2);
+      }
+    }
+
+    function loadGame2() {
+      const current = game2Data[g2Index];
+      document.getElementById('g2-current-num').textContent = g2Index + 1;
+      document.getElementById('g2-total-num').textContent = game2Data.length;
+      document.getElementById('g2-scenario-tag').textContent = current.tag;
+      document.getElementById('g2-scenario-text').textContent = current.scenario;
+
+      const container = document.getElementById('g2-options-container');
+      container.innerHTML = '';
+
+      current.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-option';
+        btn.innerHTML = `
+          <div class="opt-key">${opt.key}</div>
+          <div class="opt-content">
+            <div class="opt-power-name">${opt.name}</div>
+            <div class="opt-action-desc">${opt.text}</div>
+          </div>
+        `;
+        btn.onclick = () => answerGame2(idx);
+        container.appendChild(btn);
+      });
+
+      const panel = document.getElementById('g2-feedback');
+      panel.className = 'feedback-panel';
+      panel.classList.remove('visible');
+    }
+
+    function answerGame2(selectedIndex) {
+      const current = game2Data[g2Index];
+      const selected = current.options[selectedIndex];
+      const buttons = document.querySelectorAll('#g2-options-container .btn-option');
+      buttons.forEach(b => b.disabled = true);
+
+      const panel = document.getElementById('g2-feedback');
+      const header = document.getElementById('g2-feedback-header');
+      const body = document.getElementById('g2-feedback-text');
+
+      if (selected.correct) {
+        g2Score++;
+        document.getElementById('g2-score').textContent = g2Score;
+        buttons[selectedIndex].classList.add('selected-good');
+        panel.className = 'feedback-panel visible good';
+        header.innerHTML = '✨ Super-pouvoir activé !';
+      } else {
+        buttons[selectedIndex].classList.add('selected-bad');
+        panel.className = 'feedback-panel visible wrong';
+        header.innerHTML = '❌ Attention, ce n\'est pas la bonne réaction...';
+      }
+
+      body.innerHTML = selected.feedback;
+    }
+
+    function nextGame2() {
+      if (g2Index < game2Data.length - 1) {
+        g2Index++;
+        loadGame2();
+      } else {
+        g2Completed = true;
+        updateProgress();
+        switchGame(3);
+      }
+    }
+
+    function renderBridgeList() {
+      const container = document.getElementById('bridgeStepsList');
+      container.innerHTML = '';
+
+      bridgeCurrentSteps.forEach((step, idx) => {
+        const item = document.createElement('div');
+        item.className = 'step-item';
+        item.innerHTML = `
+          <div class="step-info">
+            <div class="step-order-badge">${idx + 1}</div>
+            <div>
+              <div class="step-title-text">${step.title}</div>
+              <div class="step-subtext">${step.desc}</div>
+            </div>
+          </div>
+          <div class="step-arrow-controls">
+            <button class="btn-arrow" onclick="moveBridgeStep(${idx}, -1)" ${idx === 0 ? 'disabled' : ''} aria-label="Monter l'étape">▲</button>
+            <button class="btn-arrow" onclick="moveBridgeStep(${idx}, 1)" ${idx === bridgeCurrentSteps.length - 1 ? 'disabled' : ''} aria-label="Descendre l'étape">▼</button>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function moveBridgeStep(index, delta) {
+      const target = index + delta;
+      if (target < 0 || target >= bridgeCurrentSteps.length) return;
+
+      const temp = bridgeCurrentSteps[index];
+      bridgeCurrentSteps[index] = bridgeCurrentSteps[target];
+      bridgeCurrentSteps[target] = temp;
+
+      renderBridgeList();
+      document.getElementById('g3-feedback').classList.remove('visible');
+    }
+
+    function validateBridgeOrder() {
+      let isCorrect = true;
+      for (let i = 0; i < bridgeCurrentSteps.length; i++) {
+        if (bridgeCurrentSteps[i].id !== bridgeStepsCorrect[i].id) {
+          isCorrect = false;
+          break;
+        }
+      }
+
+      const panel = document.getElementById('g3-feedback');
+      const header = document.getElementById('g3-feedback-header');
+      const body = document.getElementById('g3-feedback-text');
+
+      if (isCorrect) {
+        panel.className = 'feedback-panel visible good';
+        header.innerHTML = '🌉 Passerelle franchie avec succès !';
+        body.innerHTML = 'Tu as replacé les 4 étapes parfaites : <strong>1. Regard attentif</strong> ➔ <strong>2. Présence chaleureuse</strong> ➔ <strong>3. Traverser le pont vers les adultes</strong> ➔ <strong>4. Inviter aux jeux pour le zéro exclusion</strong> !';
+        g3Completed = true;
+        updateProgress();
+
+        setTimeout(() => {
+          switchGame(4);
+        }, 1500);
+      } else {
+        panel.className = 'feedback-panel visible wrong';
+        header.innerHTML = '❌ L\'ordre de la passerelle n\'est pas encore le bon...';
+        body.innerHTML = 'Réfléchis au bon cheminement : on commence d\'abord par <strong>repérer</strong> avec le regard attentif, puis on écoute avec chaleur <strong>avant</strong> d\'aller chercher les adultes pour agir en équipe !';
+      }
+    }
+
+    function updateDiplomaName() {
+      const val = document.getElementById('studentNameInput').value.trim();
+      const label = document.getElementById('printedStudentNameLabel');
+      if (val) {
+        label.textContent = `Ambassadeur Officiel : ${val}`;
+      } else {
+        label.textContent = 'Ambassadeur Officiel';
+      }
+    }
+
+    function restartAll() {
+      g1Index = 0;
+      g1Score = 0;
+      g1Completed = false;
+      document.getElementById('g1-score').textContent = '0';
+
+      g2Index = 0;
+      g2Score = 0;
+      g2Completed = false;
+      document.getElementById('g2-score').textContent = '0';
+
+      g3Completed = false;
+      bridgeCurrentSteps = [
+        bridgeStepsCorrect[2],
+        bridgeStepsCorrect[0],
+        bridgeStepsCorrect[3],
+        bridgeStepsCorrect[1]
+      ];
+
+      ['badgeGame1', 'badgeGame2', 'badgeGame3', 'badgeSummary'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.classList.remove('done');
+        if (i < 3) el.textContent = i + 1;
+      });
+
+      updateProgress();
+      loadGame1();
+      loadGame2();
+      renderBridgeList();
+      switchGame(1);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadGame1();
+      loadGame2();
+      renderBridgeList();
+      updateProgress();
+    });
+  </script>
+</body>
+</html>
