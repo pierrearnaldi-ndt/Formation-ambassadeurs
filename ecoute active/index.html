@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Super-Pouvoir de l'Écoute Active</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #cbd5e1;
+      --navy: #0f172a;
+      --sky: #0284c7;
+      --purple: #7c3aed;
+      --green: #15803d;
+      --red: #b91c1c;
+      --amber: #d97706;
+      --text: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 820px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    header {
+      text-align: center;
+      background: #ffffff;
+      border: 2px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    .tag-mission {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sky);
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      padding: 4px 14px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .rule-banner {
+      background: #f0fdf4;
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      color: #166534;
+      line-height: 1.5;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .tab-btn {
+      background: #ffffff;
+      border: 2px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 12px 8px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      border-color: var(--sky);
+      background: #f0f9ff;
+      color: var(--sky);
+    }
+
+    .tab-btn .badge-status {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: var(--text-muted);
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    .game-card.active {
+      display: flex;
+    }
+
+    .game-header h2 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: var(--navy);
+    }
+
+    .game-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .scenario-box {
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .scenario-text {
+      font-size: 1.1rem;
+      color: var(--navy);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    button.choice-btn {
+      background: #ffffff;
+      border: 2px solid var(--card-border);
+      color: var(--navy);
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    button.choice-btn:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: var(--sky);
+      transform: translateY(-1px);
+    }
+
+    button.choice-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .feedback-box {
+      display: none;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .feedback-box.correct {
+      display: block;
+      background: #f0fdf4;
+      border: 1px solid var(--green);
+      color: #14532d;
+    }
+
+    .feedback-box.error {
+      display: block;
+      background: #fef2f2;
+      border: 1px solid var(--red);
+      color: #7f1d1d;
+    }
+
+    .primary-btn {
+      align-self: flex-end;
+      background: var(--sky);
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      transition: opacity 0.2s;
+    }
+
+    .primary-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Ordre Jeu 3 */
+    .order-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .order-item {
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .order-item-content {
+      font-size: 0.95rem;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+
+    .order-arrows {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .arrow-btn {
+      background: #ffffff;
+      border: 1px solid #94a3b8;
+      color: var(--navy);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .arrow-btn:hover:not(:disabled) {
+      background: #e2e8f0;
+    }
+
+    /* Bilan sobre sans badge */
+    .summary-card {
+      background: var(--card-bg);
+      border: 2px solid var(--green);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .summary-item {
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .summary-item strong {
+      color: var(--sky);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .summary-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      .tabs {
+        grid-template-columns: 1fr;
+      }
+      .btn-group {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="tag-mission">Manuel Officiel d'Entraînement • CM1 / CM2</div>
+      <h1>Le Super-Pouvoir de l'Écoute Active</h1>
+      <p>Apprends à écouter avec tes oreilles, ta tête et ton cœur pour désamorcer les conflits.</p>
+    </header>
+
+    <div class="rule-banner">
+      <strong>La règle de Carl Rogers :</strong> Entendre est automatique et passif. Écouter activement est un vrai sport : ton cerveau et ton cœur se mettent en action pour comprendre ce que l'autre ressent au-delà des mots.
+    </div>
+
+    <!-- Onglets -->
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-btn-1" onclick="switchGame(1)">
+        <span>Jeu 1</span>
+        <span>Entendre ou Écouter ?</span>
+        <span class="badge-status" id="status-1">En cours</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-2" onclick="switchGame(2)">
+        <span>Jeu 2</span>
+        <span>Les 5 Outils Secrets</span>
+        <span class="badge-status" id="status-2">En attente</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-3" onclick="switchGame(3)">
+        <span>Jeu 3</span>
+        <span>La Clé de l'Écoute</span>
+        <span class="badge-status" id="status-3">En attente</span>
+      </button>
+    </div>
+
+    <!-- JEU 1 -->
+    <section class="game-card active" id="game-1">
+      <div class="game-header">
+        <h2>Jeu 1 : Entendre ou Écouter Activement ?</h2>
+        <p>Lis attentivement l'attitude de l'élève. S'agit-il d'un simple fait d'<strong>entendre</strong> (automatique/passif) ou d'une <strong>écoute active</strong> (empathique et engagée) ?</p>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-text" id="g1-text">Chargement de la situation...</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="choice-btn" id="g1-btn-entendre" onclick="answerGame1('entendre')">👂 Simple fait d'entendre</button>
+        <button class="choice-btn" id="g1-btn-ecouter" onclick="answerGame1('ecouter')">💡 Écoute active</button>
+      </div>
+
+      <div class="feedback-box" id="g1-feedback"></div>
+      <button class="primary-btn" id="g1-next" onclick="nextGame1()">Situation suivante</button>
+    </section>
+
+    <!-- JEU 2 -->
+    <section class="game-card" id="game-2">
+      <div class="game-header">
+        <h2>Jeu 2 : Les 5 Outils du Super-Écouteur</h2>
+        <p>Face à cette réaction, sélectionne l'outil mobilisé : <strong>Le Corps qui parle</strong>, <strong>Le Miroir magique</strong>, <strong>La Porte ouverte</strong>, <strong>Le Bouclier</strong> ou <strong>Le Supporter</strong>.</p>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-text" id="g2-text">Chargement du scénario...</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="choice-btn" onclick="answerGame2('corps')">👀 Le Corps qui parle</button>
+        <button class="choice-btn" onclick="answerGame2('miroir')">🪞 Le Miroir magique</button>
+        <button class="choice-btn" onclick="answerGame2('porte')">🔑 La Porte ouverte</button>
+        <button class="choice-btn" onclick="answerGame2('bouclier')">🛡️ Le Bouclier</button>
+        <button class="choice-btn" onclick="answerGame2('supporter')">⭐ Le Supporter</button>
+      </div>
+
+      <div class="feedback-box" id="g2-feedback"></div>
+      <button class="primary-btn" id="g2-next" onclick="nextGame2()">Scénario suivant</button>
+    </section>
+
+    <!-- JEU 3 -->
+    <section class="game-card" id="game-3">
+      <div class="game-header">
+        <h2>Jeu 3 : La Clé de l'Écoute (Remise en ordre)</h2>
+        <p>Un camarade s'approche pour te parler d'un souci. Remets ces 4 étapes d'accueil dans le bon ordre chronologique à l'aide des flèches.</p>
+      </div>
+
+      <div class="order-list" id="order-container"></div>
+
+      <div class="btn-group">
+        <button class="choice-btn" style="background: var(--sky); border-color: var(--sky); color: #fff;" onclick="checkOrderGame3()">Vérifier l'ordre des étapes</button>
+      </div>
+
+      <div class="feedback-box" id="g3-feedback"></div>
+    </section>
+
+    <!-- BILAN FINAL SANS BADGE -->
+    <section class="summary-card" id="summary-section">
+      <h2 style="color: var(--navy); font-size: 1.6rem;">Entraînement Terminé avec Succès !</h2>
+      <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto; line-height: 1.5;">
+        Tu as activé toutes les compétences de l'écoute active. En comprenant les émotions des autres, tu évites les malentendus, facilites le travail d'équipe et deviens un repère fiable pour tes camarades.
+      </p>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <strong>1. La posture non-verbale</strong>
+          <p>Regarder dans les yeux, hocher la tête et garder les bras ouverts pour montrer que la porte est accueillante.</p>
+        </div>
+        <div class="summary-item">
+          <strong>2. Le miroir magique</strong>
+          <p>Reformuler avec bienveillance : « Si je comprends bien, tu ressens cela parce que... ».</p>
+        </div>
+        <div class="summary-item">
+          <strong>3. Les questions ouvertes</strong>
+          <p>Privilégier les questions qui font parler (Comment, Qu'est-ce qui) plutôt que celles qui bloquent par oui ou non.</p>
+        </div>
+        <div class="summary-item">
+          <strong>4. Le relais bienveillant</strong>
+          <p>Écouter sans juger ni couper la parole, puis proposer d'aller trouver un adulte ensemble.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 15px;">
+        <button class="choice-btn" onclick="restartAll()">Recommencer l'entraînement</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    /* JEU 1 : Entendre vs Écouter activement */
+    const g1Questions = [
+      {
+        text: "Pendant qu'un camarade raconte sa dispute de la récréation, Tom regarde ses lacets et tapote sur son cahier avec son stylo sans prêter attention.",
+        correct: "entendre",
+        goodFeedback: "C'est un simple fait d'entendre : les oreilles reçoivent le bruit, mais ni le cerveau ni le cœur ne sont mobilisés pour comprendre ce qui est dit.",
+        badFeedback: "Ce n'est pas une écoute active : l'élève ne fait aucun effort d'attention, il entend passivement les bruits sans se soucier du message de son camarade."
+      },
+      {
+        text: "Lina regarde son amie dans les yeux, hoche doucement la tête et lui dit : « Tu as dû avoir beaucoup de peine de te retrouver seule sur le banc... ».",
+        correct: "ecouter",
+        goodFeedback: "C'est une écoute active : Lina engage son regard, son attention et son cœur pour comprendre l'émotion vécue par son amie.",
+        badFeedback: "Ce n'est pas un simple fait d'entendre : Lina utilise son empathie et son corps pour accueillir le témoignage. Il s'agit d'une écoute active."
+      },
+      {
+        text: "Yanis entend les cris joyeux au loin sous le préau tout en continuant à lacer sa basket sans lever la tête.",
+        correct: "entendre",
+        goodFeedback: "C'est un simple fait d'entendre : l'oreille capte des vibrations sonores automatiquement, sans démarche de compréhension.",
+        badFeedback: "Ce n'est pas une écoute active : entendre les bruits de fond est un automatisme involontaire, sans écoute empathique."
+      },
+      {
+        text: "Lucas écoute son camarade sans l'interrompre, puis reformule calmement ses propos pour vérifier qu'il a bien saisi toute la situation.",
+        correct: "ecouter",
+        goodFeedback: "C'est une écoute active : Lucas fait l'effort de se concentrer, de respecter le temps de parole et de valider ce que l'autre exprime.",
+        badFeedback: "Ce n'est pas une écoute passive : se taire, se concentrer et reformuler demande un vrai effort, c'est l'essence même de l'écoute active."
+      }
+    ];
+
+    let g1Index = 0;
+    let g1Completed = false;
+
+    /* JEU 2 : Les 5 Outils Secrets */
+    const g2Questions = [
+      {
+        text: "« Si je comprends bien, tu es triste parce que tu penses que l'équipe a perdu le match à cause de ton penalty manqué ? »",
+        correct: "miroir",
+        goodFeedback: "Cet outil est le Miroir magique : la reformulation permet de redire avec ses propres mots pour montrer qu'on a compris jusqu'au bout.",
+        badFeedback: "Ce n'est pas cet outil : l'élève redit ce qu'il a perçu pour renvoyer le reflet de la situation. C'est le miroir magique (la reformulation)."
+      },
+      {
+        text: "Pendant que son amie parle, Sam garde les bras détendus le long du corps, un regard chaleureux et ne croise pas les bras.",
+        correct: "corps",
+        goodFeedback: "Cet outil est le Corps qui parle : la posture ouverte, le regard franc et le visage détendu mettent immédiatement en confiance.",
+        badFeedback: "Ce n'est pas cet outil : il s'agit d'une communication par l'attitude physique, c'est l'outil du corps qui parle (le non-verbal)."
+      },
+      {
+        text: "« Comment tu te sens depuis cette dispute, et qu'est-ce qui s'est passé au moment où ils sont partis ? »",
+        correct: "porte",
+        goodFeedback: "Cet outil est la Porte ouverte : utiliser des mots de détective (Comment, Qu'est-ce qui) permet à l'autre de raconter son histoire sans blocage.",
+        badFeedback: "Ce n'est pas cet outil : poser des questions qui invitent à s'exprimer plutôt qu'à répondre par oui ou non, c'est utiliser la porte ouverte."
+      },
+      {
+        text: "Un élève confie une erreur. L'ambassadeur reste calme, patient, ne lui coupe pas la parole et ne dit pas « Tu as eu tort, c'est bête ».",
+        correct: "bouclier",
+        goodFeedback: "Cet outil est le Bouclier : accueillir la parole sans moquerie, sans jugement et avec neutralité protège la confiance.",
+        badFeedback: "Ce n'est pas cet outil : refuser de juger ou de se moquer et garder une attitude neutre et bienveillante, c'est utiliser le bouclier."
+      },
+      {
+        text: "« Merci de m'en avoir parlé, c'est très courageux. Je comprends tout à fait que ce soit difficile à vivre. Dis-m'en plus si tu le souhaites. »",
+        correct: "supporter",
+        goodFeedback: "Cet outil est le Supporter : valider les émotions de l'autre et l'encourager avec douceur redonne confiance pour surmonter l'épreuve.",
+        badFeedback: "Ce n'est pas cet outil : reconnaître le courage de parler et valider ce que l'autre ressent relève du rôle de supporter."
+      }
+    ];
+
+    let g2Index = 0;
+    let g2Completed = false;
+
+    /* JEU 3 : La Clé de l'Écoute (Ordre chronologique) */
+    const g3CorrectSteps = [
+      { id: 1, text: "Adopter la bonne posture : Regarder le camarade dans les yeux, visage bienveillant, sans croiser les bras." },
+      { id: 2, text: "Ouvrir la porte : Poser une question de détective (« Comment tu te sens ? Qu'est-ce qui s'est passé ? »)." },
+      { id: 3, text: "Activer le bouclier et le miroir : Écouter sans couper la parole, sans juger, puis reformuler avec ses propres mots." },
+      { id: 4, text: "Valider et relayer : Rassurer l'élève sur son courage et lui proposer d'aller trouver un adulte ensemble." }
+    ];
+
+    let g3CurrentList = [
+      g3CorrectSteps[2],
+      g3CorrectSteps[0],
+      g3CorrectSteps[3],
+      g3CorrectSteps[1]
+    ];
+    let g3Completed = false;
+
+    /* NAVIGATION */
+    function switchGame(gameNum) {
+      document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('summary-section').style.display = 'none';
+
+      document.getElementById('game-' + gameNum).classList.add('active');
+      document.getElementById('tab-btn-' + gameNum).classList.add('active');
+    }
+
+    /* GESTION JEU 1 */
+    function renderGame1() {
+      const q = g1Questions[g1Index];
+      document.getElementById('g1-text').innerText = q.text;
+      const fb = document.getElementById('g1-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+      document.getElementById('g1-next').style.display = 'none';
+      document.getElementById('g1-btn-entendre').disabled = false;
+      document.getElementById('g1-btn-ecouter').disabled = false;
+    }
+
+    function answerGame1(choice) {
+      const q = g1Questions[g1Index];
+      const fb = document.getElementById('g1-feedback');
+      document.getElementById('g1-btn-entendre').disabled = true;
+      document.getElementById('g1-btn-ecouter').disabled = true;
+
+      if (choice === q.correct) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = q.badFeedback;
+      }
+
+      document.getElementById('g1-next').style.display = 'block';
+    }
+
+    function nextGame1() {
+      g1Index++;
+      if (g1Index < g1Questions.length) {
+        renderGame1();
+      } else {
+        g1Completed = true;
+        document.getElementById('status-1').innerText = 'Validé ✓';
+        document.getElementById('status-1').style.color = 'var(--green)';
+        document.getElementById('status-2').innerText = 'En cours';
+        switchGame(2);
+        checkAllCompleted();
+      }
+    }
+
+    /* GESTION JEU 2 */
+    function renderGame2() {
+      const q = g2Questions[g2Index];
+      document.getElementById('g2-text').innerText = q.text;
+      const fb = document.getElementById('g2-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+      document.getElementById('g2-next').style.display = 'none';
+      document.querySelectorAll('#game-2 .choice-btn').forEach(btn => btn.disabled = false);
+    }
+
+    function answerGame2(choice) {
+      const q = g2Questions[g2Index];
+      const fb = document.getElementById('g2-feedback');
+      document.querySelectorAll('#game-2 .choice-btn').forEach(btn => btn.disabled = true);
+
+      if (choice === q.correct) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = q.badFeedback;
+      }
+
+      document.getElementById('g2-next').style.display = 'block';
+    }
+
+    function nextGame2() {
+      g2Index++;
+      if (g2Index < g2Questions.length) {
+        renderGame2();
+      } else {
+        g2Completed = true;
+        document.getElementById('status-2').innerText = 'Validé ✓';
+        document.getElementById('status-2').style.color = 'var(--green)';
+        document.getElementById('status-3').innerText = 'En cours';
+        switchGame(3);
+        checkAllCompleted();
+      }
+    }
+
+    /* GESTION JEU 3 */
+    function renderGame3() {
+      const container = document.getElementById('order-container');
+      container.innerHTML = '';
+
+      g3CurrentList.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'order-item';
+        row.innerHTML = `
+          <div class="order-item-content"><strong>Étape ${idx + 1} :</strong> ${item.text}</div>
+          <div class="order-arrows">
+            <button class="arrow-btn" onclick="moveStep(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
+            <button class="arrow-btn" onclick="moveStep(${idx}, 1)" ${idx === g3CurrentList.length - 1 ? 'disabled' : ''}>▼</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function moveStep(index, direction) {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= g3CurrentList.length) return;
+      const temp = g3CurrentList[index];
+      g3CurrentList[index] = g3CurrentList[targetIndex];
+      g3CurrentList[targetIndex] = temp;
+      renderGame3();
+      const fb = document.getElementById('g3-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+    }
+
+    function checkOrderGame3() {
+      const fb = document.getElementById('g3-feedback');
+      let isCorrect = true;
+
+      for (let i = 0; i < g3CorrectSteps.length; i++) {
+        if (g3CurrentList[i].id !== g3CorrectSteps[i].id) {
+          isCorrect = false;
+          break;
+        }
+      }
+
+      if (isCorrect) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = "Ordre parfait : en ouvrant d'abord ton corps, en posant une question ouverte, en écoutant sans juger avec reformulation, puis en encourageant l'élève à aller trouver un adulte à deux, la chaîne de confiance est totale.";
+        g3Completed = true;
+        document.getElementById('status-3').innerText = 'Validé ✓';
+        document.getElementById('status-3').style.color = 'var(--green)';
+        setTimeout(() => {
+          showFinalSummary();
+        }, 1200);
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = "L'ordre n'est pas encore le bon. Réfléchis : commence d'abord par adopter une posture ouverte et attentive, pose une question qui invite à parler, écoute sans juger en reformulant, puis propose d'aller trouver un adulte.";
+      }
+    }
+
+    function showFinalSummary() {
+      document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+      document.getElementById('summary-section').style.display = 'flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function checkAllCompleted() {
+      if (g1Completed && g2Completed && g3Completed) {
+        showFinalSummary();
+      }
+    }
+
+    function restartAll() {
+      g1Index = 0;
+      g2Index = 0;
+      g1Completed = false;
+      g2Completed = false;
+      g3Completed = false;
+
+      g3CurrentList = [
+        g3CorrectSteps[2],
+        g3CorrectSteps[0],
+        g3CorrectSteps[3],
+        g3CorrectSteps[1]
+      ];
+
+      document.getElementById('status-1').innerText = 'En cours';
+      document.getElementById('status-1').style.color = 'var(--text-muted)';
+      document.getElementById('status-2').innerText = 'En attente';
+      document.getElementById('status-2').style.color = 'var(--text-muted)';
+      document.getElementById('status-3').innerText = 'En attente';
+      document.getElementById('status-3').style.color = 'var(--text-muted)';
+
+      renderGame1();
+      renderGame2();
+      renderGame3();
+      switchGame(1);
+    }
+
+    // Lancement
+    renderGame1();
+    renderGame2();
+    renderGame3();
+  </script>
+</body>
+</html>
