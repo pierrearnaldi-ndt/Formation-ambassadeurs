@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entraînement des Super-Ambassadeurs du Web</title>
+  <style>
+    :root {
+      --bg: #0b1021;
+      --card-bg: #151c38;
+      --card-border: #2a3b6c;
+      --cyan: #00d2ff;
+      --purple: #8b5cf6;
+      --green: #10b981;
+      --red: #ef4444;
+      --amber: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 820px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(0, 210, 255, 0.2));
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .equation-banner {
+      background: rgba(21, 28, 56, 0.8);
+      border: 1px dashed var(--purple);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      text-align: center;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 12px 8px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      border-color: var(--cyan);
+      background: rgba(0, 210, 255, 0.12);
+      color: #fff;
+    }
+
+    .tab-btn .badge-status {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .game-card.active {
+      display: flex;
+    }
+
+    .game-header h2 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: var(--cyan);
+    }
+
+    .game-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .scenario-box {
+      background: #0f152b;
+      border: 1px solid #1e294b;
+      border-radius: 12px;
+      padding: 18px;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .scenario-text {
+      font-size: 1.1rem;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    button.choice-btn {
+      background: #1c264a;
+      border: 1px solid #334477;
+      color: #fff;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    button.choice-btn:hover:not(:disabled) {
+      background: #273766;
+      border-color: var(--cyan);
+      transform: translateY(-1px);
+    }
+
+    button.choice-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .feedback-box {
+      display: none;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .feedback-box.correct {
+      display: block;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid var(--green);
+      color: #a7f3d0;
+    }
+
+    .feedback-box.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid var(--red);
+      color: #fca5a5;
+    }
+
+    .primary-btn {
+      align-self: flex-end;
+      background: var(--cyan);
+      color: #07101f;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      transition: opacity 0.2s;
+    }
+
+    .primary-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* List Ordering styles for Game 3 */
+    .order-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .order-item {
+      background: #111827;
+      border: 1px solid #2d3748;
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .order-item-content {
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+
+    .order-arrows {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .arrow-btn {
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .arrow-btn:hover {
+      background: var(--purple);
+      border-color: var(--purple);
+    }
+
+    /* Final Screen */
+    .summary-card {
+      background: var(--card-bg);
+      border: 1px solid var(--green);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .summary-item {
+      background: #0f152b;
+      border: 1px solid #1e294b;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .summary-item strong {
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .summary-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      .tabs {
+        grid-template-columns: 1fr;
+      }
+      .btn-group {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="tag">Manuel Officiel d'Entraînement</div>
+      <h1>Mission : Stop au Cyberharcèlement !</h1>
+      <p>Entraîne-toi à repérer les pièges numériques et à activer les bons réflexes d'ambassadeur.</p>
+    </header>
+
+    <div class="equation-banner">
+      <strong>L'équation du cyberharcèlement :</strong> Technologie (écrans, réseaux) + Préjudices émotionnels/sociaux × Attaque répétée 24h/24 = Blessure profonde. Contrairement à la cour, cela ne s'arrête jamais seul.
+    </div>
+
+    <!-- Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-btn-1" onclick="switchGame(1)">
+        <span>Jeu 1</span>
+        <span>Le Radar des Dangers</span>
+        <span class="badge-status" id="status-1">En cours</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-2" onclick="switchGame(2)">
+        <span>Jeu 2</span>
+        <span>Les 4 Super-Pouvoirs</span>
+        <span class="badge-status" id="status-2">En attente</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-3" onclick="switchGame(3)">
+        <span>Jeu 3</span>
+        <span>Briser le Piège du Silence</span>
+        <span class="badge-status" id="status-3">En attente</span>
+      </button>
+    </div>
+
+    <!-- JEU 1 -->
+    <section class="game-card active" id="game-1">
+      <div class="game-header">
+        <h2>Jeu 1 : Le Radar des Dangers</h2>
+        <p>Lis la situation numérique. S'agit-il d'un <strong>danger évident</strong> (attaques directes et visibles) ou d'un <strong>piège invisible</strong> (sournois, caché ou indirect) ?</p>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-text" id="g1-text">Chargement de la situation...</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="choice-btn" id="g1-btn-evident" onclick="answerGame1('evident')">🚨 Danger évident</button>
+        <button class="choice-btn" id="g1-btn-invisible" onclick="answerGame1('invisible')">🕵️ Piège invisible</button>
+      </div>
+
+      <div class="feedback-box" id="g1-feedback"></div>
+      <button class="primary-btn" id="g1-next" onclick="nextGame1()">Situation suivante</button>
+    </section>
+
+    <!-- JEU 2 -->
+    <section class="game-card" id="game-2">
+      <div class="game-header">
+        <h2>Jeu 2 : Les 4 Super-Pouvoirs d'Action et de Guérison</h2>
+        <p>Face à chaque situation, sélectionne le pouvoir que l'ambassadeur doit mobiliser : <strong>Sensibilisation</strong>, <strong>Intervention Sécurisée</strong>, <strong>Soutien</strong> ou <strong>Civilité</strong>.</p>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-text" id="g2-text">Chargement du scénario...</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="choice-btn" onclick="answerGame2('sensibilisation')">📢 Sensibilisation</button>
+        <button class="choice-btn" onclick="answerGame2('intervention')">🚨 Intervention Sécurisée</button>
+        <button class="choice-btn" onclick="answerGame2('soutien')">🤝 Soutien</button>
+        <button class="choice-btn" onclick="answerGame2('civilite')">✨ Civilité</button>
+      </div>
+
+      <div class="feedback-box" id="g2-feedback"></div>
+      <button class="primary-btn" id="g2-next" onclick="nextGame2()">Scénario suivant</button>
+    </section>
+
+    <!-- JEU 3 -->
+    <section class="game-card" id="game-3">
+      <div class="game-header">
+        <h2>Jeu 3 : Briser le Piège du Silence</h2>
+        <p>Les témoins tombent souvent dans le piège de la peur et du silence. Remets ces 4 étapes dans le bon ordre chronologique pour neutraliser le danger et faire intervenir un adulte.</p>
+      </div>
+
+      <div class="order-list" id="order-container"></div>
+
+      <div class="btn-group">
+        <button class="choice-btn" style="background: var(--purple); border-color: var(--purple);" onclick="checkOrderGame3()">Vérifier l'ordre des étapes</button>
+      </div>
+
+      <div class="feedback-box" id="g3-feedback"></div>
+    </section>
+
+    <!-- BILAN FINAL -->
+    <section class="summary-card" id="summary-section">
+      <h2 style="color: var(--cyan); font-size: 1.6rem;">Entraînement Terminé !</h2>
+      <p style="color: #cbd5e1; max-width: 650px; margin: 0 auto; line-height: 1.5;">
+        Tu as activé toutes les compétences indispensables du Super-Ambassadeur. N'oublie jamais que la protection du web repose sur l'action collective : les élèves, les parents et un adulte de l'établissement.
+      </p>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <strong>1. Repérer vite</strong>
+          <p>Distinguer les attaques évidentes des pièges invisibles qui s'infiltrent jusque dans les chambres.</p>
+        </div>
+        <div class="summary-item">
+          <strong>2. Briser le silence</strong>
+          <p>Ne jamais banaliser une méchanceté en ligne. Le silence des témoins est le meilleur allié du harceleur.</p>
+        </div>
+        <div class="summary-item">
+          <strong>3. Relayer vers un adulte</strong>
+          <p>Un ambassadeur ne règle pas les attaques seul : il fait le pont vers un adulte de confiance.</p>
+        </div>
+        <div class="summary-item">
+          <strong>4. Entourer la victime</strong>
+          <p>Offrir son amitié et sa présence pour recharger la batterie émotionnelle de son camarade.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 15px;">
+        <button class="choice-btn" onclick="restartAll()">Recommencer la formation</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    /* DONNÉES DU JEU 1 (Dangers évidents vs Pièges invisibles) */
+    const g1Questions = [
+      {
+        text: "Un élève reçoit en continu des menaces de se faire taper à la sortie dans un groupe de discussion privé.",
+        correct: "evident",
+        goodFeedback: "Exact : il s'agit d'une menace directe en ligne. Elle provoque une peur immédiate et un risque pour la sécurité physique ou émotionnelle.",
+        badFeedback: "Attention, ce n'est pas un piège invisible : la menace est explicite, écrite noir sur blanc et vise clairement à intimider. C'est un danger évident."
+      },
+      {
+        text: "Quelqu'un a créé un profil anonyme avec le nom et la photo d'un camarade pour insulter les autres à sa place.",
+        correct: "invisible",
+        goodFeedback: "Exact : la création de faux profil et l'usurpation d'identité sont des pièges invisibles qui trompent l'entourage et détruisent une réputation de manière sournoise.",
+        badFeedback: "Attention, l'attaque passe par le masque du faux compte et vise à piéger tout le monde en douce. C'est un piège invisible."
+      },
+      {
+        text: "Sous la dernière vidéo d'un élève, plusieurs personnes postent des insultes et des moqueries humiliantes sur son physique.",
+        correct: "evident",
+        goodFeedback: "Exact : les insultes publiques répétées font partie des dangers évidents repérables directement sur les écrans.",
+        badFeedback: "Attention, l'insulte directe et visible sous un message est un danger évident, car le contenu haineux s'affiche directement aux yeux de tous."
+      },
+      {
+        text: "Une fausse rumeur intime est discrètement partagée de compte en compte pour que plus personne ne parle à un élève.",
+        correct: "invisible",
+        goodFeedback: "Exact : la diffusion de rumeurs est un piège invisible très destructeur qui isole la cible sans qu'elle sache toujours d'où vient l'attaque.",
+        badFeedback: "Attention, la rumeur se propage par derrière et de façon détournée. Il s'agit typiquement d'un piège invisible."
+      }
+    ];
+
+    let g1Index = 0;
+    let g1Completed = false;
+
+    /* DONNÉES DU JEU 2 (Les 4 Super-Pouvoirs) */
+    const g2Questions = [
+      {
+        text: "Tu remarques qu'un camarade de classe reste seul dans son coin, l'air triste et anxieux, en regardant son téléphone avec appréhension.",
+        correct: "soutien",
+        goodFeedback: "Exact : tu actives le Pouvoir du Soutien. Tu viens lui offrir ton amitié, lui rappeler qu'il n'est pas seul et l'accompagner pour en parler.",
+        badFeedback: "Ce n'est pas ce pouvoir : face à un camarade blessé émotionnellement, la priorité immédiate de l'ambassadeur est de lui apporter ton soutien et ton amitié."
+      },
+      {
+        text: "Tu découvres qu'une photo embarrassante d'un élève tourne sur les téléphones et fait l'objet de chantage violent.",
+        correct: "intervention",
+        goodFeedback: "Exact : tu actives l'Intervention Sécurisée. Tu n'agis pas seul et tu alertes tout de suite un adulte pour protéger la victime.",
+        badFeedback: "Ce n'est pas la réponse adaptée : quand l'attaque est en cours et dangereuse, l'ambassadeur doit déclencher une intervention sécurisée en prévenant un adulte."
+      },
+      {
+        text: "Certains élèves pensent que se moquer sur les réseaux « ce n'est pas grave » car « ce n'est que pour rire ».",
+        correct: "sensibilisation",
+        goodFeedback: "Exact : tu actives le Pouvoir de Sensibilisation. Tu rappelles les conséquences graves du cyberharcèlement et expliques les pièges numériques.",
+        badFeedback: "Attention : pour changer les mentalités et faire comprendre que ce n'est pas un jeu, c'est la sensibilisation qu'il faut utiliser."
+      },
+      {
+        text: "Dans le groupe de discussion de la classe, un nouveau venu est froidement rejeté. Tu décides de poster un message accueillant et de montrer l'exemple du respect.",
+        correct: "civilite",
+        goodFeedback: "Exact : tu actives le Pouvoir de Civilité. Tu incarnes la règle d'or du respect en ligne et donnes l'exemple aux autres.",
+        badFeedback: "Ce n'est pas ce pouvoir : montrer l'exemple et fixer une règle de respect au quotidien relève du pouvoir de la civilité."
+      }
+    ];
+
+    let g2Index = 0;
+    let g2Completed = false;
+
+    /* DONNÉES DU JEU 3 (Étapes de déblocage) */
+    const g3CorrectSteps = [
+      { id: 1, text: "Repérer le problème : Refuser de considérer les insultes ou moqueries numériques comme « normales » ou « juste pour rire »." },
+      { id: 2, text: "Garder la trace : Ne pas effacer le contenu immédiatement afin de pouvoir montrer ce qui se passe." },
+      { id: 3, text: "Entourer la cible : Aller vers le camarade isolé pour lui assurer qu'il n'est pas coupable et rompre sa solitude." },
+      { id: 4, text: "Alerter un adulte : Prévenir un adulte de confiance sans tarder pour que l'équipe prenne le relais de façon sécurisée." }
+    ];
+
+    let g3CurrentList = [
+      g3CorrectSteps[1],
+      g3CorrectSteps[3],
+      g3CorrectSteps[0],
+      g3CorrectSteps[2]
+    ];
+    let g3Completed = false;
+
+    /* FONCTIONS DE NAVIGATION */
+    function switchGame(gameNum) {
+      document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('summary-section').style.display = 'none';
+
+      document.getElementById('game-' + gameNum).classList.add('active');
+      document.getElementById('tab-btn-' + gameNum).classList.add('active');
+    }
+
+    /* GESTION DU JEU 1 */
+    function renderGame1() {
+      const q = g1Questions[g1Index];
+      document.getElementById('g1-text').innerText = q.text;
+      const fb = document.getElementById('g1-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+      document.getElementById('g1-next').style.display = 'none';
+      document.getElementById('g1-btn-evident').disabled = false;
+      document.getElementById('g1-btn-invisible').disabled = false;
+    }
+
+    function answerGame1(choice) {
+      const q = g1Questions[g1Index];
+      const fb = document.getElementById('g1-feedback');
+      document.getElementById('g1-btn-evident').disabled = true;
+      document.getElementById('g1-btn-invisible').disabled = true;
+
+      if (choice === q.correct) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = q.badFeedback;
+      }
+
+      document.getElementById('g1-next').style.display = 'block';
+    }
+
+    function nextGame1() {
+      g1Index++;
+      if (g1Index < g1Questions.length) {
+        renderGame1();
+      } else {
+        g1Completed = true;
+        document.getElementById('status-1').innerText = 'Validé ✓';
+        document.getElementById('status-1').style.color = 'var(--green)';
+        document.getElementById('status-2').innerText = 'En cours';
+        switchGame(2);
+        checkAllCompleted();
+      }
+    }
+
+    /* GESTION DU JEU 2 */
+    function renderGame2() {
+      const q = g2Questions[g2Index];
+      document.getElementById('g2-text').innerText = q.text;
+      const fb = document.getElementById('g2-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+      document.getElementById('g2-next').style.display = 'none';
+      document.querySelectorAll('#game-2 .choice-btn').forEach(btn => btn.disabled = false);
+    }
+
+    function answerGame2(choice) {
+      const q = g2Questions[g2Index];
+      const fb = document.getElementById('g2-feedback');
+      document.querySelectorAll('#game-2 .choice-btn').forEach(btn => btn.disabled = true);
+
+      if (choice === q.correct) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = q.badFeedback;
+      }
+
+      document.getElementById('g2-next').style.display = 'block';
+    }
+
+    function nextGame2() {
+      g2Index++;
+      if (g2Index < g2Questions.length) {
+        renderGame2();
+      } else {
+        g2Completed = true;
+        document.getElementById('status-2').innerText = 'Validé ✓';
+        document.getElementById('status-2').style.color = 'var(--green)';
+        document.getElementById('status-3').innerText = 'En cours';
+        switchGame(3);
+        checkAllCompleted();
+      }
+    }
+
+    /* GESTION DU JEU 3 */
+    function renderGame3() {
+      const container = document.getElementById('order-container');
+      container.innerHTML = '';
+
+      g3CurrentList.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'order-item';
+        row.innerHTML = `
+          <div class="order-item-content"><strong>${idx + 1}.</strong> ${item.text}</div>
+          <div class="order-arrows">
+            <button class="arrow-btn" onclick="moveStep(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
+            <button class="arrow-btn" onclick="moveStep(${idx}, 1)" ${idx === g3CurrentList.length - 1 ? 'disabled' : ''}>▼</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function moveStep(index, direction) {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= g3CurrentList.length) return;
+      const temp = g3CurrentList[index];
+      g3CurrentList[index] = g3CurrentList[targetIndex];
+      g3CurrentList[targetIndex] = temp;
+      renderGame3();
+      const fb = document.getElementById('g3-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+    }
+
+    function checkOrderGame3() {
+      const fb = document.getElementById('g3-feedback');
+      let isCorrect = true;
+
+      for (let i = 0; i < g3CorrectSteps.length; i++) {
+        if (g3CurrentList[i].id !== g3CorrectSteps[i].id) {
+          isCorrect = false;
+          break;
+        }
+      }
+
+      if (isCorrect) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = "Ordre parfait : en refusant d'abord la banalisation, puis en gardant les éléments, en épaulant la victime et en prévenant un adulte sans délai, le cercle de la violence est stoppé net.";
+        g3Completed = true;
+        document.getElementById('status-3').innerText = 'Validé ✓';
+        document.getElementById('status-3').style.color = 'var(--green)';
+        setTimeout(() => {
+          showFinalSummary();
+        }, 1200);
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = "L'ordre n'est pas encore le bon. Réfléchis : il faut d'abord refuser la normalisation de la violence, conserver une trace, réconforter son camarade, puis passer le relais à un adulte.";
+      }
+    }
+
+    function showFinalSummary() {
+      document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+      document.getElementById('summary-section').style.display = 'flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function checkAllCompleted() {
+      if (g1Completed && g2Completed && g3Completed) {
+        showFinalSummary();
+      }
+    }
+
+    function restartAll() {
+      g1Index = 0;
+      g2Index = 0;
+      g1Completed = false;
+      g2Completed = false;
+      g3Completed = false;
+
+      g3CurrentList = [
+        g3CorrectSteps[1],
+        g3CorrectSteps[3],
+        g3CorrectSteps[0],
+        g3CorrectSteps[2]
+      ];
+
+      document.getElementById('status-1').innerText = 'En cours';
+      document.getElementById('status-1').style.color = 'var(--text-muted)';
+      document.getElementById('status-2').innerText = 'En attente';
+      document.getElementById('status-2').style.color = 'var(--text-muted)';
+      document.getElementById('status-3').innerText = 'En attente';
+      document.getElementById('status-3').style.color = 'var(--text-muted)';
+
+      renderGame1();
+      renderGame2();
+      renderGame3();
+      switchGame(1);
+    }
+
+    // Initialisation au chargement
+    renderGame1();
+    renderGame2();
+    renderGame3();
+  </script>
+</body>
+</html>
