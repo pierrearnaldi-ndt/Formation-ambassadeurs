@@ -706,107 +706,95 @@
       cursor: not-allowed;
     }
 
-    .diploma-card {
+    .conclusion-card {
       text-align: center;
-      padding: 30px;
+      padding: 36px 30px;
       background: #ffffff;
-      border: 6px double #c7d2fe;
+      border: 3px solid #c7d2fe;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       position: relative;
     }
 
-    .badge-ribbon {
-      font-size: 4rem;
-      margin-bottom: 10px;
+    .conclusion-icon {
+      font-size: 3.5rem;
+      margin-bottom: 12px;
       display: inline-block;
-      animation: floatBadge 2s ease-in-out infinite alternate;
     }
 
-    @keyframes floatBadge {
-      0% { transform: translateY(0px) rotate(0deg); }
-      100% { transform: translateY(-8px) rotate(3deg); }
-    }
-
-    .diploma-title {
+    .conclusion-title {
       font-size: 1.8rem;
       font-weight: 900;
       color: var(--primary);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
-    .diploma-school {
+    .conclusion-school {
       font-size: 1rem;
       color: var(--slate-600);
       font-weight: 600;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
-    .student-input-container {
-      max-width: 440px;
-      margin: 0 auto 24px;
+    .mission-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      max-width: 820px;
+      margin: 0 auto 28px;
+      text-align: left;
+    }
+
+    .mission-step-card {
+      background: var(--slate-50);
+      border: 2px solid var(--slate-200);
+      padding: 18px 20px;
+      border-radius: var(--radius-sm);
       display: flex;
       flex-direction: column;
       gap: 8px;
-      text-align: left;
     }
 
-    .student-input-label {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--slate-600);
-    }
-
-    .student-name-input {
-      padding: 12px 16px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border: 2px solid var(--slate-300);
-      border-radius: var(--radius-sm);
-      outline: none;
-      text-align: center;
-      color: var(--primary);
-      transition: border-color 0.2s;
-    }
-    .student-name-input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px var(--primary-soft);
-    }
-
-    .diploma-powers-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-      max-width: 720px;
-      margin: 0 auto 24px;
-      text-align: left;
-    }
-
-    .diploma-power-item {
-      background: var(--slate-50);
-      border: 1px solid var(--slate-200);
-      padding: 12px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 0.88rem;
-      display: flex;
+    .mission-step-num {
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+
+    .mission-step-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--slate-800);
+    }
+
+    .mission-step-desc {
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      line-height: 1.45;
     }
 
     .pierre-callout {
       background: linear-gradient(135deg, #fef3c7, #fde68a);
       border: 2px dashed #f59e0b;
       border-radius: var(--radius-sm);
-      padding: 18px 24px;
-      max-width: 680px;
-      margin: 0 auto 24px;
+      padding: 20px 24px;
+      max-width: 720px;
+      margin: 0 auto 26px;
       color: #92400e;
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 1.02rem;
       display: flex;
       align-items: center;
       gap: 16px;
       text-align: left;
+      line-height: 1.5;
     }
 
     .certif-actions {
@@ -814,59 +802,6 @@
       gap: 14px;
       justify-content: center;
       flex-wrap: wrap;
-    }
-
-    .btn-print {
-      background: #0f172a;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: var(--radius-sm);
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-print:hover {
-      background: #334155;
-    }
-
-    @media print {
-      body {
-        background: white;
-        padding: 0;
-      }
-      header, .nav-tabs, .carnet-banner, .btn-print, .certif-actions, .student-input-container {
-        display: none !important;
-      }
-      main {
-        padding: 0;
-        max-width: 100%;
-      }
-      .game-section {
-        display: none !important;
-      }
-      #sectionSummary {
-        display: block !important;
-      }
-      .diploma-card {
-        box-shadow: none;
-        border: 4px double #4338ca;
-        padding: 40px;
-      }
-      .printed-student-name {
-        display: block !important;
-        font-size: 1.8rem;
-        font-weight: 900;
-        color: #4338ca;
-        margin-bottom: 16px;
-      }
-    }
-
-    .printed-student-name {
-      display: none;
     }
 
     @media (max-width: 680px) {
@@ -880,13 +815,17 @@
       .header-progress {
         max-width: 100%;
       }
-      .card {
+      .card, .conclusion-card {
         padding: 20px;
       }
       .nav-btn {
         min-width: 140px;
         font-size: 0.82rem;
         padding: 10px;
+      }
+      .pierre-callout {
+        flex-direction: column;
+        text-align: center;
       }
     }
   </style>
@@ -936,8 +875,8 @@
         <span>Jeu 3 : La Passerelle</span>
       </button>
       <button class="nav-btn" id="tabGameSummary" onclick="switchGame(4)">
-        <span class="tab-badge" id="badgeSummary">🎓</span>
-        <span>Mon Badge</span>
+        <span class="tab-badge" id="badgeSummary">🌟</span>
+        <span>Bilan de mission</span>
       </button>
     </nav>
 
@@ -1064,48 +1003,37 @@
     </section>
 
     <section id="sectionSummary" class="game-section">
-      <div class="diploma-card">
-        <div class="badge-ribbon">🎖️</div>
-        <h2 class="diploma-title">Félicitations, Élève Ambassadeur !</h2>
-        <p class="diploma-school">Carnet de bord officiel de l'école • Mission Sérénité & Climat Scolaire</p>
+      <div class="conclusion-card">
+        <div class="conclusion-icon">🎉</div>
+        <h2 class="conclusion-title">Bravo pour ton engagement !</h2>
+        <p class="conclusion-school">Tu as franchi avec succès les 3 ateliers de ton carnet de bord officiel.</p>
 
-        <div class="student-input-container">
-          <label class="student-input-label" for="studentNameInput">Inscris ton prénom pour personnaliser ton attestation :</label>
-          <input type="text" id="studentNameInput" class="student-name-input" placeholder="Ex: Lucas, Sarah, Camille..." oninput="updateDiplomaName()">
-        </div>
-
-        <div class="printed-student-name" id="printedStudentNameLabel">Ambassadeur Officiel</div>
-
-        <div class="diploma-powers-grid">
-          <div class="diploma-power-item">
-            <span>❤️</span>
-            <div><strong>Empathie validée :</strong> Écoute chaleureuse sans jamais juger.</div>
+        <div class="mission-steps-grid">
+          <div class="mission-step-card">
+            <span class="mission-step-num">1</span>
+            <div class="mission-step-title">La Candidature</div>
+            <div class="mission-step-desc">Explique avec tes propres mots pourquoi tu as envie de faire reculer la solitude et d'aider tes camarades.</div>
           </div>
-          <div class="diploma-power-item">
-            <span>🤝</span>
-            <div><strong>Solidarité validée :</strong> Zéro exclusion et inclusion aux jeux.</div>
+          <div class="mission-step-card">
+            <span class="mission-step-num">2</span>
+            <div class="mission-step-title">La Formation</div>
+            <div class="mission-step-desc">Tu viens de découvrir les bons réflexes : empathie, solidarité, courage et travail en équipe avec l'école.</div>
           </div>
-          <div class="diploma-power-item">
-            <span>🦁</span>
-            <div><strong>Courage validé :</strong> Refus catégorique des moqueries.</div>
-          </div>
-          <div class="diploma-power-item">
-            <span>👥</span>
-            <div><strong>Passerelle solide :</strong> Relais direct vers les adultes de l'école.</div>
+          <div class="mission-step-card">
+            <span class="mission-step-num">3</span>
+            <div class="mission-step-title">La Mission Officielle</div>
+            <div class="mission-step-desc">Devenir la passerelle solide dans la cour pour permettre le 100 % sérénité et le zéro exclusion !</div>
           </div>
         </div>
 
         <div class="pierre-callout">
-          <div style="font-size:2rem;">👋</div>
+          <div style="font-size:2.2rem;">👋</div>
           <div>
-            « Si vous avez envie de faire la différence dès aujourd'hui, venez en parler à <strong>Pierre</strong> sans hésiter. Votre présence change tout ! »
+            « Si tu as envie de faire la différence dès aujourd'hui, viens en parler à <strong>Pierre</strong> sans hésiter. Ta présence et ton écoute changent tout dans l'école ! »
           </div>
         </div>
 
         <div class="certif-actions">
-          <button class="btn-print" onclick="window.print()">
-            🖨️ Imprimer mon carnet de bord
-          </button>
           <button class="btn-action" style="margin-top:0;" onclick="restartAll()">
             🔄 Recommencer l'entraînement
           </button>
@@ -1277,7 +1205,7 @@
     const bridgeStepsCorrect = [
       { id: 1, title: "1. Regard attentif", desc: "Repérer un copain isolé, triste ou une injustice dans la cour." },
       { id: 2, title: "2. Présence chaleureuse", desc: "Offrir une parole bienveillante et écouter sans jamais juger." },
-      { id: 3, title: "3. Traverser le pont", desc: "Prévenir les maîtres, maîtresses ou Pierre en toute confiance." },
+      { id: 3, title: "3. Traverser le pont", desc: "Prévenir un adulte en toute confiance." },
       { id: 4, title: "4. Zéro exclusion", desc: "Inviter le camarade à jouer pour que chacun vienne à l'école avec le sourire." }
     ];
 
@@ -1513,7 +1441,7 @@
       if (isCorrect) {
         panel.className = 'feedback-panel visible good';
         header.innerHTML = '🌉 Passerelle franchie avec succès !';
-        body.innerHTML = 'Tu as replacé les 4 étapes parfaites : <strong>1. Regard attentif</strong> ➔ <strong>2. Présence chaleureuse</strong> ➔ <strong>3. Traverser le pont vers les adultes</strong> ➔ <strong>4. Inviter aux jeux pour le zéro exclusion</strong> !';
+        body.innerHTML = 'Tu as replacé les 4 étapes parfaites : <strong>1. Regard attentif</strong> ➔ <strong>2. Présence chaleureuse</strong> ➔ <strong>3. Traverser le pont pour prévenir un adulte</strong> ➔ <strong>4. Inviter aux jeux pour le zéro exclusion</strong> !';
         g3Completed = true;
         updateProgress();
 
@@ -1523,17 +1451,7 @@
       } else {
         panel.className = 'feedback-panel visible wrong';
         header.innerHTML = '❌ L\'ordre de la passerelle n\'est pas encore le bon...';
-        body.innerHTML = 'Réfléchis au bon cheminement : on commence d\'abord par <strong>repérer</strong> avec le regard attentif, puis on écoute avec chaleur <strong>avant</strong> d\'aller chercher les adultes pour agir en équipe !';
-      }
-    }
-
-    function updateDiplomaName() {
-      const val = document.getElementById('studentNameInput').value.trim();
-      const label = document.getElementById('printedStudentNameLabel');
-      if (val) {
-        label.textContent = `Ambassadeur Officiel : ${val}`;
-      } else {
-        label.textContent = 'Ambassadeur Officiel';
+        body.innerHTML = 'Réfléchis au bon cheminement : on commence d\'abord par <strong>repérer</strong> avec le regard attentif, puis on écoute avec chaleur <strong>avant</strong> d\'aller chercher un adulte pour agir en équipe !';
       }
     }
 
@@ -1560,6 +1478,7 @@
         const el = document.getElementById(id);
         el.classList.remove('done');
         if (i < 3) el.textContent = i + 1;
+        else el.textContent = '🌟';
       });
 
       updateProgress();
