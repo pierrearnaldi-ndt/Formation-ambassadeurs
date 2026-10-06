@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portail des Élèves Ambassadeurs</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card-bg: #151f38;
+      --card-border: #233358;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.15));
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 36px 20px;
+    }
+
+    .badge-top {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .icon-wrapper {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .btn-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--accent);
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* Thèmes spécifiques par module */
+    .card-intro { --accent: #10b981; }
+    .card-physique { --accent: #ef4444; }
+    .card-verbal { --accent: #f59e0b; }
+    .card-moral { --accent: #ec4899; }
+    .card-cyber { --accent: #06b6d4; }
+    .card-ecoute { --accent: #8b5cf6; }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      padding: 16px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge-top">Élèves Ambassadeurs • CM1 / CM2</div>
+      <h1>Centre d'Entraînement Officiel</h1>
+      <p>Choisis ton module pour t'entraîner sur les mini-jeux interactifs et réussir ta mission.</p>
+    </header>
+
+    <main class="grid">
+      <!-- Introduction -->
+      <a href="./introduction/" class="card card-intro">
+        <div class="card-content">
+          <div class="icon-wrapper">📘</div>
+          <h2>Introduction</h2>
+          <p>Le carnet de bord : découvrir le rôle, les pouvoirs, les limites et l'équation du super-héros de l'école.</p>
+        </div>
+        <div class="btn-action">
+          <span>Lancer le carnet</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Harcèlement Physique -->
+      <a href="./harcelement physique/" class="card card-physique">
+        <div class="card-content">
+          <div class="icon-wrapper">🛑</div>
+          <h2>Harcèlement physique</h2>
+          <p>Distinguer le chahut consenti du harcèlement répété, et intervenir sans jamais se mettre en danger.</p>
+        </div>
+        <div class="btn-action">
+          <span>Lancer l'entraînement</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Harcèlement Verbal -->
+      <a href="./harc%C3%A8lement verbal/" class="card card-verbal">
+        <div class="card-content">
+          <div class="icon-wrapper">🗣️</div>
+          <h2>Harcèlement verbal</h2>
+          <p>Dénicher les attaques directes et le poison secret dans le dos pour briser la chaîne de la normalisation.</p>
+        </div>
+        <div class="btn-action">
+          <span>Lancer l'entraînement</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Harcèlement Moral -->
+      <a href="./harcelement moral/" class="card card-moral">
+        <div class="card-content">
+          <div class="icon-wrapper">🧠</div>
+          <h2>Harcèlement moral</h2>
+          <p>Apprendre à repérer les violences invisibles, contrer l'isolement social et appliquer le code d'urgence.</p>
+        </div>
+        <div class="btn-action">
+          <span>Lancer l'entraînement</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Cyberharcèlement -->
+      <a href="./cyberharcelement/" class="card card-cyber">
+        <div class="card-content">
+          <div class="icon-wrapper">💻</div>
+          <h2>Cyberharcèlement</h2>
+          <p>Activer son radar face aux pièges en ligne, aux faux profils et aux rumeurs qui s'infiltrent après l'école.</p>
+        </div>
+        <div class="btn-action">
+          <span>Lancer l'entraînement</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <!-- Écoute Active -->
+      <a href="./ecoute active/" class="card card-ecoute">
+        <div class="card-content">
+          <div class="icon-wrapper">👂</div>
+          <h2>Écoute active</h2>
+          <p>Maîtriser les 5 outils du super-écouteur : miroir magique, bouclier anti-jugement et questions ouvertes.</p>
+        </div>
+        <div class="btn-action">
+          <span>Lancer l'entraînement</span>
+          <span class="arrow">→</span>
+        </div>
+      </a>
+    </main>
+
+    <footer>
+      Mission Ambassadeurs — Ensemble pour une école sûre et bienveillante
+    </footer>
+  </div>
+
+</body>
+</html>
