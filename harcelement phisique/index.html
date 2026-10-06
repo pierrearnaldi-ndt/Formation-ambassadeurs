@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formation Élèves Ambassadeurs - Prévention du Harcèlement Physique</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #6366f1;
+      --primary-dark: #3730a3;
+      --secondary: #0ea5e9;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.07), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 50%, #eef2ff 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    .header-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .brand-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      min-width: 180px;
+      max-width: 320px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      height: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 999px;
+    }
+
+    .progress-stats {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      white-space: nowrap;
+    }
+
+    main {
+      flex: 1;
+      max-width: 1050px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 6px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-tab-btn {
+      flex: 1;
+      padding: 12px 18px;
+      border: none;
+      background: transparent;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .nav-tab-btn:hover {
+      color: var(--primary);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .nav-tab-btn.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .badge-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .badge-check.done {
+      background: var(--success);
+      color: white;
+    }
+
+    .game-section {
+      display: none;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .game-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .card-header {
+      margin-bottom: 24px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 16px;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #e0e7ff;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .card-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .game1-card {
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .game1-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .game1-context {
+      font-size: 0.88rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    .category-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .cat-btn {
+      padding: 16px 14px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: white;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cat-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.12);
+    }
+
+    .cat-btn-title {
+      font-weight: 700;
+      font-size: 0.98rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cat-btn-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .cat-btn.correct {
+      border-color: var(--success);
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .cat-btn.wrong {
+      border-color: var(--danger);
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
+    .feedback-box {
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin-top: 18px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .feedback-box.visible {
+      display: block;
+    }
+
+    .feedback-box.correct {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+
+    .feedback-box.wrong {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #9f1239;
+    }
+
+    .feedback-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feedback-desc {
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .next-btn-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .action-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .scenario-header {
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      margin-bottom: 24px;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .scenario-meta {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .scenario-desc {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #1e293b;
+    }
+
+    .scenario-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .scenario-opt {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .scenario-opt:hover:not(:disabled) {
+      border-color: var(--primary-light);
+      background: #f8faff;
+    }
+
+    .opt-letter {
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 700;
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .scenario-opt.selected-correct {
+      border-color: var(--success);
+      background: #f0fdf4;
+    }
+
+    .scenario-opt.selected-correct .opt-letter {
+      background: var(--success);
+      color: white;
+    }
+
+    .scenario-opt.selected-wrong {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+
+    .scenario-opt.selected-wrong .opt-letter {
+      background: var(--danger);
+      color: white;
+    }
+
+    .reorder-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .reorder-item {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .reorder-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .step-badge {
+      background: #e2e8f0;
+      color: #475569;
+      font-weight: 700;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .step-text {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .reorder-controls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .move-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #475569;
+      transition: all 0.2s;
+    }
+
+    .move-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .move-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .protocol-callout {
+      background: #eef2ff;
+      border-left: 4px solid var(--primary);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #312e81;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .emergency-badge {
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .summary-card {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .trophy-icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: inline-block;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+
+    .diploma-box {
+      border: 3px double #cbd5e1;
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 600px;
+      margin: 20px auto;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.02);
+    }
+
+    .summary-points {
+      text-align: left;
+      margin: 20px auto;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .summary-point-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: #334155;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .progress-bar-container {
+        max-width: 100%;
+        width: 100%;
+      }
+      .card {
+        padding: 20px;
+      }
+      .category-buttons {
+        grid-template-columns: 1fr;
+      }
+      .nav-tab-btn {
+        font-size: 0.82rem;
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">🛡️</div>
+        <div class="brand-text">
+          <h1>Académie des Ambassadeurs</h1>
+          <p>Prévention du harcèlement physique en milieu scolaire</p>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap: 12px; width: 100%; max-width: 320px;">
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="globalProgressBar"></div>
+        </div>
+        <span class="progress-stats" id="globalProgressText">0 / 3 validés</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" aria-label="Navigation des jeux">
+      <button class="nav-tab-btn active" id="tabGame1" onclick="switchGame(1)">
+        <span class="badge-check" id="badgeGame1">1</span>
+        <span>Jeu 1 : Détecter</span>
+      </button>
+      <button class="nav-tab-btn" id="tabGame2" onclick="switchGame(2)">
+        <span class="badge-check" id="badgeGame2">2</span>
+        <span>Jeu 2 : Réagir & Posture</span>
+      </button>
+      <button class="nav-tab-btn" id="tabGame3" onclick="switchGame(3)">
+        <span class="badge-check" id="badgeGame3">3</span>
+        <span>Jeu 3 : Protocole d'alerte</span>
+      </button>
+    </nav>
+
+    <section id="sectionGame1" class="game-section active">
+      <div class="card">
+        <div class="card-header">
+          <span class="badge-tag">Jeu 1 • Reconnaissance</span>
+          <h2 class="card-title">Distinguer les situations</h2>
+          <p class="card-subtitle">En tant qu'ambassadeur, le harcèlement physique repose sur 3 critères indispensables : <strong>l'intention d'atteinte physique</strong>, <strong>la répétition</strong> et <strong>le déséquilibre des forces (asymétrie)</strong>.</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: 0.9rem; color: var(--text-muted);">
+          <span>Situation <b id="g1-current-idx">1</b> sur <b id="g1-total-count">5</b></span>
+          <span>Score : <b id="g1-score">0</b> pt(s)</span>
+        </div>
+
+        <div class="game1-card" id="g1-situation-card">
+          <div class="game1-text" id="g1-situation-text">Chargement...</div>
+          <div class="game1-context" id="g1-situation-context">Chargement du contexte...</div>
+        </div>
+
+        <div class="category-buttons" id="g1-choices">
+          <button class="cat-btn" onclick="checkGame1Answer('chahut')">
+            <span class="cat-btn-title">🤝 Jeu ou Chahut consenti</span>
+            <span class="cat-btn-desc">Tout le monde rigole, aucun malaise, rôles interchangeables.</span>
+          </button>
+          <button class="cat-btn" onclick="checkGame1Answer('conflit')">
+            <span class="cat-btn-title">⚡ Incident / Conflit ponctuel</span>
+            <span class="cat-btn-desc">Dispute ou bousculade isolée, sans répétition ni emprise.</span>
+          </button>
+          <button class="cat-btn" onclick="checkGame1Answer('harcelement')">
+            <span class="cat-btn-title">🚫 Harcèlement physique</span>
+            <span class="cat-btn-desc">Gestes violents répétés, humiliation, cible isolée et démunie.</span>
+          </button>
+        </div>
+
+        <div class="feedback-box" id="g1-feedback">
+          <div class="feedback-title" id="g1-feedback-title"></div>
+          <div class="feedback-desc" id="g1-feedback-desc"></div>
+          <div class="next-btn-container">
+            <button class="action-btn" id="g1-next-btn" onclick="nextGame1Question()">Suivant ➔</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sectionGame2" class="game-section">
+      <div class="card">
+        <div class="card-header">
+          <span class="badge-tag">Jeu 2 • Posture d'ambassadeur</span>
+          <h2 class="card-title">Mises en situation concrètes</h2>
+          <p class="card-subtitle">Rappelle-toi : l'ambassadeur n'est <strong>ni un justicier</strong>, <strong>ni un surveillant solitaire</strong>. Son rôle est de sécuriser, écouter et relayer aux adultes.</p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; font-size: 0.9rem; color: var(--text-muted);">
+          <span>Cas pratique <b id="g2-current-idx">1</b> sur <b id="g2-total-count">4</b></span>
+          <span>Score : <b id="g2-score">0</b> pt(s)</span>
+        </div>
+
+        <div class="scenario-header">
+          <div class="scenario-meta" id="g2-scenario-tag">Scénario</div>
+          <div class="scenario-desc" id="g2-scenario-text">Chargement du scénario...</div>
+        </div>
+
+        <div class="scenario-options" id="g2-options">
+          <!-- Dynamically populated options -->
+        </div>
+
+        <div class="feedback-box" id="g2-feedback">
+          <div class="feedback-title" id="g2-feedback-title"></div>
+          <div class="feedback-desc" id="g2-feedback-desc"></div>
+          <div class="next-btn-container">
+            <button class="action-btn" id="g2-next-btn" onclick="nextGame2Question()">Cas suivant ➔</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sectionGame3" class="game-section">
+      <div class="card">
+        <div class="card-header">
+          <span class="badge-tag">Jeu 3 • Réflexes & Protocole</span>
+          <h2 class="card-title">Le protocole d'alerte dans l'ordre</h2>
+          <p class="card-subtitle">Utilise les flèches (▲ / ▼) pour remettre ces 5 actions clés dans le bon ordre chronologique lorsqu'une situation de harcèlement physique survient.</p>
+        </div>
+
+        <div class="reorder-list" id="reorderList">
+          <!-- Dynamically populated reorder steps -->
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+          <div class="emergency-badge">
+            📞 Rappel d'urgence : Numéro 3018 (Écoute & signalement)
+          </div>
+          <button class="action-btn" onclick="validateProtocolOrder()">Vérifier l'ordre</button>
+        </div>
+
+        <div class="feedback-box" id="g3-feedback">
+          <div class="feedback-title" id="g3-feedback-title"></div>
+          <div class="feedback-desc" id="g3-feedback-desc"></div>
+        </div>
+
+        <div class="protocol-callout">
+          <span>💡</span>
+          <div>
+            <strong>Règle d'or de l'ambassadeur :</strong> Ne jamais promettre de « garder le secret absolu » face à des violences physiques. Il faut expliquer avec bienveillance que pour le protéger efficacement, un adulte doit impérativement intervenir.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sectionSummary" class="game-section">
+      <div class="card summary-card">
+        <div class="trophy-icon">🎓</div>
+        <h2 class="card-title" style="font-size: 1.8rem; color: var(--primary);">Félicitations, Ambassadeur Certifié !</h2>
+        <p class="card-subtitle" style="max-width: 600px; margin: 8px auto 20px;">Tu as terminé avec succès les 3 modules de formation contre le harcèlement physique en milieu scolaire.</p>
+
+        <div class="diploma-box">
+          <h3 style="font-size: 1.2rem; color: #1e293b; margin-bottom: 8px;">Attestation d'engagement citoyen</h3>
+          <p style="font-size: 0.95rem; color: #64748b; margin-bottom: 16px;">Élève sentinelle & protecteur du climat scolaire</p>
+          <div class="summary-points">
+            <div class="summary-point-item">✅ <strong>Détection active :</strong> Sait repérer la répétition et l'asymétrie physique.</div>
+            <div class="summary-point-item">✅ <strong>Posture équilibrée :</strong> Écoute sans juger, ne se met jamais en danger physique.</div>
+            <div class="summary-point-item">✅ <strong>Liaison d'alerte :</strong> Transmet fidèlement à l'équipe pHARe, CPE et direction.</div>
+            <div class="summary-point-item">✅ <strong>Ressources d'aide :</strong> Maîtrise le 3018 et l'accueil en infirmerie.</div>
+          </div>
+          <button class="action-btn" style="margin-top: 15px;" onclick="resetAllGames()">Recommencer la formation</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const game1Data = [
+      {
+        text: "Aux casiers, deux élèves de même gabarit se disputent bruyamment pour un livre emprunté et se bousculent une fois avant de s'éloigner.",
+        context: "C'est la première fois qu'ils s'opposent, le ton est monté sous le coup de la colère.",
+        type: "conflit",
+        goodFeedback: "C'est bien un <strong>incident / conflit ponctuel</strong>. Il y a eu une bousculade physique, mais pas d'emprise asymétrique ni de répétition dans le temps.",
+        badFeedback: "Ce n'est pas la bonne catégorie. Il s'agissait d'un <strong>incident / conflit ponctuel</strong> : l'événement est isolé et oppose deux élèves à égalité de force sans répétition ni domination continue."
+      },
+      {
+        text: "Chaque matin dans l'escalier, un groupe de 3 grands bloque le passage d'un élève de 6e, lui fait un croche-pied puis rit quand ses affaires tombent.",
+        context: "L'élève baisse la tête, n'ose plus passer par là et arrive souvent en retard en classe avec des égratignures.",
+        type: "harcelement",
+        goodFeedback: "Parfaitement identifié ! C'est du <strong>harcèlement physique</strong> avéré : répétition quotidienne, déséquilibre évident (3 contre 1), souffrance et dégradation de matériel.",
+        badFeedback: "Attention à l'analyse : c'est bien du <strong>harcèlement physique</strong> ! On retrouve les 3 critères cumulatifs : intention d'atteinte physique, répétition quotidienne et nette asymétrie de pouvoir (3 grands contre 1 élève de 6e isolé)."
+      },
+      {
+        text: "Pendant la récréation, deux amis jouent au foot sur le terrain, se font des passes appuyées et rigolent ensemble après une glissade dans l'herbe.",
+        context: "Ils se tapent dans la main et continuent leur partie avec le sourire.",
+        type: "chahut",
+        goodFeedback: "Il s'agit bien d'un <strong>jeu ou chahut consenti</strong>. Les deux élèves s'amusent ensemble, sans détresse, sans humiliation et sans domination.",
+        badFeedback: "Erreur de diagnostic : c'est un <strong>jeu / chahut consenti</strong>. L'interaction est amicale et réciproque, il n'y a ni intention de nuire ni rapport de domination."
+      },
+      {
+        text: "Dans le couloir des vestiaires d'EPS, un élève est systématiquement poussé contre les casiers chaque semaine, et on lui subtilise son goûter de force.",
+        context: "L'élève tremble dès qu'arrive le cours d'EPS et demande souvent à aller à l'infirmerie pour éviter l'activité.",
+        type: "harcelement",
+        goodFeedback: "C'est bien du <strong>harcèlement physique avec racket</strong> : lieu à l'écart, gestes violents récurrents, emprise et conséquences graves sur la santé de l'élève.",
+        badFeedback: "Ce n'est pas un simple incident. Il s'agit de <strong>harcèlement physique avec racket</strong> : la régularité ('chaque semaine'), la contrainte physique et la peur durable de la victime caractérisent une véritable situation de harcèlement."
+      },
+      {
+        text: "Dans la cour, deux élèves de 4e se battent violemment suite à une insulte échangée la veille sur un réseau social. Les surveillants interviennent immédiatement.",
+        context: "C'est un échange de coups mutuels ponctuel sans antécédent de domination.",
+        type: "conflit",
+        goodFeedback: "C'est bien une <strong>bagarre ponctuelle / conflit aigu</strong>. La situation exige une intervention immédiate de la vie scolaire, mais ne correspond pas au schéma d'usure répétée du harcèlement.",
+        badFeedback: "Attention à la nuance : c'est une <strong>bagarre ponctuelle</strong> et non un harcèlement. Même si la violence physique est grave et sanctionnée, il n'y a pas ici de répétition ni d'emprise unilatérale d'un agresseur sur une victime isolée."
+      }
+    ];
+
+    const game2Data = [
+      {
+        title: "Témoin direct dans le couloir",
+        description: "Tu vois un élève plaqué violemment contre un mur par deux élèves plus âgés qui lui réclament de l'argent. Que fais-tu ?",
+        options: [
+          {
+            text: "Je me jette au milieu de la bagarre pour frapper les agresseurs et faire justice moi-même.",
+            correct: false,
+            feedback: "Attention : l'ambassadeur ne doit <strong>jamais s'exposer à un danger physique</strong> ni employer la violence, ce qui aggraverait le danger."
+          },
+          {
+            text: "J'alerte immédiatement d'une voix forte un surveillant ou un adulte à proximité sans me mettre en danger, puis je rejoins la victime dès que le danger est écarté.",
+            correct: true,
+            feedback: "Excellent réflexe ! Sécurité d'abord : faire intervenir les adultes immédiatement pour neutraliser le danger, puis soutenir la victime."
+          },
+          {
+            text: "Je sors mon téléphone pour filmer discrètement la scène et la publier sur Instagram afin de faire honte aux agresseurs.",
+            correct: false,
+            feedback: "Grave erreur : filmer et diffuser une agression est puni par la loi (cyberviolence/atteinte à la dignité) et humilie encore plus la victime."
+          }
+        ]
+      },
+      {
+        title: "Confession spontanée",
+        description: "Un camarade de classe vient te voir discrètement en larmes : 'Chaque semaine aux toilettes, ils me bousculent et déchirent mes cahiers. Mais promets-moi de ne rien dire à personne, sinon ils vont me tabasser.' Que lui réponds-tu ?",
+        options: [
+          {
+            text: "« Je te jure le secret absolu, compte sur moi, on va gérer ça seuls entre élèves sans adultes. »",
+            correct: false,
+            feedback: "Dangereux ! Garder le silence sur des violences physiques enferme la victime et permet aux agresseurs de continuer impunément."
+          },
+          {
+            text: "« Je t'écoute et je te crois. Tu n'es pas coupable. Je ne peux pas garder un secret qui met ta santé en danger, mais je te promets que nous irons ensemble voir la CPE ou l'infirmière pour que tu sois protégé sans représailles. »",
+            correct: true,
+            feedback: "Posture exemplaire ! Écoute bienveillante, déculpabilisation, refus du piège du faux secret et accompagnement rassurant."
+          },
+          {
+            text: "« Arrête de te laisser faire, apprends le self-défense et rends-leur leurs coups la prochaine fois. »",
+            correct: false,
+            feedback: "Inadapté : cela culpabilise la victime et l'expose à une escalade violente impossible à gérer seule face à un groupe."
+          }
+        ]
+      },
+      {
+        title: "Signes physiques d'alerte indirects",
+        description: "Tu remarques qu'un élève d'habitude joyeux a des bleus récurrents aux bras, son cartable est abîmé et il attend systématiquement que la cour se vide pour sortir. Que fais-tu ?",
+        options: [
+          {
+            text: "Je vais le voir en privé avec bienveillance : 'J'ai remarqué que ça n'allait pas trop ces derniers temps, tu as le droit d'être aidé si quelqu'un t'embête.'",
+            correct: true,
+            feedback: "Exactement le rôle d'ambassadeur ! Observer, briser l'isolement dans un cadre discret et offrir une écoute bienveillante sans contraindre."
+          },
+          {
+            text: "J'en parle ouvertement devant tout le monde à la cantine en lui demandant qui l'a tapé pour le forcer à parler.",
+            correct: false,
+            feedback: "Mauvaise réaction : l'exposer publiquement devant ses camarades accentue son sentiment de honte et sa peur des représailles."
+          },
+          {
+            text: "Ce n'est pas mon affaire, tant qu'il ne demande rien de lui-même, il ne faut pas s'en mêler.",
+            correct: false,
+            feedback: "Non : les victimes de violences physiques n'osent que rarement demander de l'aide par peur. Le rôle d'ambassadeur consiste précisément à aller vers elles."
+          }
+        ]
+      },
+      {
+        title: "Après le signalement",
+        description: "La situation a été transmise à l'équipe pHARe et aux adultes. En tant qu'ambassadeur dans la cour le lendemain, quelle est ton attitude ?",
+        options: [
+          {
+            text: "Je continue de veiller discrètement sur lui, je l'inclus dans les groupes de discussion et je signale s'il y a des regards menaçants.",
+            correct: true,
+            feedback: "Parfait ! La vigilance solidaire et l'inclusion sociale empêchent les récidives et aident l'élève à se sentir de nouveau en sécurité."
+          },
+          {
+            text: "Je vais provoquer les agresseurs en leur disant 'Vous êtes finis, les profs sont sur votre dos !'",
+            correct: false,
+            feedback: "Comportement dangereux : cela relance les provocations et met en danger l'élève victime ainsi que toi-même."
+          },
+          {
+            text: "Considérant que le problème est 100% résolu par l'administration, je l'ignore complètement pour ne pas avoir d'ennuis.",
+            correct: false,
+            feedback: "L'après-signalement est crucial : le soutien fraternel des pairs et la présence quotidienne sont la meilleure protection pour la victime."
+          }
+        ]
+      }
+    ];
+
+    const correctProtocolSteps = [
+      { id: 1, text: "Repérer les signes d'alerte physiques et l'isolement répété de l'élève." },
+      { id: 2, text: "Accueillir la parole dans un endroit calme et confidentiel, avec empathie." },
+      { id: 3, text: "Rassurer l'élève sur son innocence et expliquer qu'un adulte doit être informé pour sa sécurité." },
+      { id: 4, text: "Transmettre les faits précis à un adulte référent (équipe pHARe, CPE, Infirmière, Direction)." },
+      { id: 5, text: "Maintenir une présence bienveillante et solidaire au quotidien dans la cour et les couloirs." }
+    ];
+
+    // Shuffled copy for the interactive game
+    let currentProtocolOrder = [...correctProtocolSteps].sort(() => Math.random() - 0.5);
+
+    let currentG1Index = 0;
+    let scoreG1 = 0;
+    let completedG1 = false;
+
+    let currentG2Index = 0;
+    let scoreG2 = 0;
+    let completedG2 = false;
+
+    let completedG3 = false;
+
+    function updateGlobalProgress() {
+      let count = 0;
+      if (completedG1) count++;
+      if (completedG2) count++;
+      if (completedG3) count++;
+
+      const pct = Math.round((count / 3) * 100);
+      document.getElementById('globalProgressBar').style.width = pct + '%';
+      document.getElementById('globalProgressText').textContent = `${count} / 3 validés`;
+
+      if (completedG1) {
+        document.getElementById('badgeGame1').classList.add('done');
+        document.getElementById('badgeGame1').textContent = '✓';
+      }
+      if (completedG2) {
+        document.getElementById('badgeGame2').classList.add('done');
+        document.getElementById('badgeGame2').textContent = '✓';
+      }
+      if (completedG3) {
+        document.getElementById('badgeGame3').classList.add('done');
+        document.getElementById('badgeGame3').textContent = '✓';
+      }
+
+      if (count === 3) {
+        setTimeout(() => {
+          switchGame(4); // Summary view
+        }, 1200);
+      }
+    }
+
+    function switchGame(gameNum) {
+      document.querySelectorAll('.game-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      if (gameNum === 1) {
+        document.getElementById('sectionGame1').classList.add('active');
+        document.getElementById('tabGame1').classList.add('active');
+      } else if (gameNum === 2) {
+        document.getElementById('sectionGame2').classList.add('active');
+        document.getElementById('tabGame2').classList.add('active');
+      } else if (gameNum === 3) {
+        document.getElementById('sectionGame3').classList.add('active');
+        document.getElementById('tabGame3').classList.add('active');
+      } else if (gameNum === 4) {
+        document.getElementById('sectionSummary').classList.add('active');
+      }
+    }
+
+    function loadGame1Question() {
+      const q = game1Data[currentG1Index];
+      document.getElementById('g1-current-idx').textContent = currentG1Index + 1;
+      document.getElementById('g1-total-count').textContent = game1Data.length;
+      document.getElementById('g1-situation-text').textContent = `« ${q.text} »`;
+      document.getElementById('g1-situation-context').textContent = `Contexte observé : ${q.context}`;
+
+      // Reset buttons and feedback
+      const buttons = document.querySelectorAll('#g1-choices .cat-btn');
+      buttons.forEach(b => {
+        b.className = 'cat-btn';
+        b.disabled = false;
+      });
+      const fb = document.getElementById('g1-feedback');
+      fb.className = 'feedback-box';
+      fb.classList.remove('visible');
+    }
+
+    function checkGame1Answer(selectedType) {
+      const q = game1Data[currentG1Index];
+      const buttons = document.querySelectorAll('#g1-choices .cat-btn');
+      buttons.forEach(b => b.disabled = true);
+
+      const fb = document.getElementById('g1-feedback');
+      const fbTitle = document.getElementById('g1-feedback-title');
+      const fbDesc = document.getElementById('g1-feedback-desc');
+
+      if (selectedType === q.type) {
+        scoreG1++;
+        document.getElementById('g1-score').textContent = scoreG1;
+        fb.className = 'feedback-box visible correct';
+        fbTitle.innerHTML = '✅ Bonne réponse !';
+        fbDesc.innerHTML = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box visible wrong';
+        fbTitle.innerHTML = '❌ Pas tout à fait...';
+        fbDesc.innerHTML = q.badFeedback;
+      }
+    }
+
+    function nextGame1Question() {
+      if (currentG1Index < game1Data.length - 1) {
+        currentG1Index++;
+        loadGame1Question();
+      } else {
+        completedG1 = true;
+        updateGlobalProgress();
+        switchGame(2);
+      }
+    }
+
+    function loadGame2Question() {
+      const sc = game2Data[currentG2Index];
+      document.getElementById('g2-current-idx').textContent = currentG2Index + 1;
+      document.getElementById('g2-total-count').textContent = game2Data.length;
+      document.getElementById('g2-scenario-tag').textContent = sc.title;
+      document.getElementById('g2-scenario-text').textContent = sc.description;
+
+      const optsContainer = document.getElementById('g2-options');
+      optsContainer.innerHTML = '';
+
+      sc.options.forEach((opt, idx) => {
+        const letter = String.fromCharCode(65 + idx);
+        const btn = document.createElement('button');
+        btn.className = 'scenario-opt';
+        btn.innerHTML = `<span class="opt-letter">${letter}</span><span>${opt.text}</span>`;
+        btn.onclick = () => selectGame2Option(idx);
+        optsContainer.appendChild(btn);
+      });
+
+      const fb = document.getElementById('g2-feedback');
+      fb.className = 'feedback-box';
+      fb.classList.remove('visible');
+    }
+
+    function selectGame2Option(optIndex) {
+      const sc = game2Data[currentG2Index];
+      const selected = sc.options[optIndex];
+      const buttons = document.querySelectorAll('#g2-options .scenario-opt');
+      buttons.forEach(b => b.disabled = true);
+
+      const fb = document.getElementById('g2-feedback');
+      const fbTitle = document.getElementById('g2-feedback-title');
+      const fbDesc = document.getElementById('g2-feedback-desc');
+
+      if (selected.correct) {
+        scoreG2++;
+        document.getElementById('g2-score').textContent = scoreG2;
+        buttons[optIndex].classList.add('selected-correct');
+        fb.className = 'feedback-box visible correct';
+        fbTitle.innerHTML = '🌟 Posture exemplaire !';
+      } else {
+        buttons[optIndex].classList.add('selected-wrong');
+        fb.className = 'feedback-box visible wrong';
+        fbTitle.innerHTML = '⚠️ Réaction risquée';
+      }
+
+      fbDesc.innerHTML = selected.feedback;
+    }
+
+    function nextGame2Question() {
+      if (currentG2Index < game2Data.length - 1) {
+        currentG2Index++;
+        loadGame2Question();
+      } else {
+        completedG2 = true;
+        updateGlobalProgress();
+        switchGame(3);
+      }
+    }
+
+    function renderProtocolList() {
+      const container = document.getElementById('reorderList');
+      container.innerHTML = '';
+
+      currentProtocolOrder.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'reorder-item';
+        div.innerHTML = `
+          <div class="reorder-content">
+            <span class="step-badge">${index + 1}</span>
+            <span class="step-text">${item.text}</span>
+          </div>
+          <div class="reorder-controls">
+            <button class="move-btn" onclick="moveProtocolStep(${index}, -1)" ${index === 0 ? 'disabled' : ''} title="Monter">▲</button>
+            <button class="move-btn" onclick="moveProtocolStep(${index}, 1)" ${index === currentProtocolOrder.length - 1 ? 'disabled' : ''} title="Descendre">▼</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function moveProtocolStep(index, direction) {
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= currentProtocolOrder.length) return;
+
+      const temp = currentProtocolOrder[index];
+      currentProtocolOrder[index] = currentProtocolOrder[targetIndex];
+      currentProtocolOrder[targetIndex] = temp;
+
+      renderProtocolList();
+      const fb = document.getElementById('g3-feedback');
+      fb.classList.remove('visible');
+    }
+
+    function validateProtocolOrder() {
+      let isCorrect = true;
+      for (let i = 0; i < currentProtocolOrder.length; i++) {
+        if (currentProtocolOrder[i].id !== correctProtocolSteps[i].id) {
+          isCorrect = false;
+          break;
+        }
+      }
+
+      const fb = document.getElementById('g3-feedback');
+      const fbTitle = document.getElementById('g3-feedback-title');
+      const fbDesc = document.getElementById('g3-feedback-desc');
+
+      if (isCorrect) {
+        fb.className = 'feedback-box visible correct';
+        fbTitle.innerHTML = '🎉 Chronologie parfaite !';
+        fbDesc.innerHTML = 'Tu maîtrises l\'enchaînement idéal : repérage ➔ accueil discret ➔ déculpabilisation ➔ signalement institutionnel ➔ soutien quotidien.';
+        completedG3 = true;
+        updateGlobalProgress();
+      } else {
+        fb.className = 'feedback-box visible wrong';
+        fbTitle.innerHTML = '❌ Ordre encore inexact';
+        fbDesc.innerHTML = 'Relis bien les étapes : souviens-toi qu\'il faut d\'abord sécuriser et écouter la parole de la victime avant de faire la démarche auprès des adultes référents.';
+      }
+    }
+
+    function resetAllGames() {
+      currentG1Index = 0;
+      scoreG1 = 0;
+      completedG1 = false;
+      document.getElementById('g1-score').textContent = '0';
+
+      currentG2Index = 0;
+      scoreG2 = 0;
+      completedG2 = false;
+      document.getElementById('g2-score').textContent = '0';
+
+      completedG3 = false;
+      currentProtocolOrder = [...correctProtocolSteps].sort(() => Math.random() - 0.5);
+
+      document.getElementById('badgeGame1').className = 'badge-check';
+      document.getElementById('badgeGame1').textContent = '1';
+      document.getElementById('badgeGame2').className = 'badge-check';
+      document.getElementById('badgeGame2').textContent = '2';
+      document.getElementById('badgeGame3').className = 'badge-check';
+      document.getElementById('badgeGame3').textContent = '3';
+
+      updateGlobalProgress();
+      loadGame1Question();
+      loadGame2Question();
+      renderProtocolList();
+      switchGame(1);
+    }
+
+    // Initial boot
+    window.addEventListener('DOMContentLoaded', () => {
+      loadGame1Question();
+      loadGame2Question();
+      renderProtocolList();
+      updateGlobalProgress();
+    });
+  </script>
+</body>
+</html>
