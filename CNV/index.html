@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Secret de la Girafe - Entraînement à la Communication Non-Violente</title>
+  <style>
+    :root {
+      --bg: #0b121e;
+      --card-bg: #141e33;
+      --card-border: #24355a;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --cyan: #06b6d4;
+      --purple: #8b5cf6;
+      --red: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 820px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    header {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(16, 185, 129, 0.2));
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .equation-banner {
+      background: rgba(20, 30, 51, 0.9);
+      border: 1px dashed var(--amber);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      text-align: center;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 12px 8px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      border-color: var(--amber);
+      background: rgba(245, 158, 11, 0.12);
+      color: #fff;
+    }
+
+    .tab-btn .badge-status {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .game-card.active {
+      display: flex;
+    }
+
+    .game-header h2 {
+      font-size: 1.4rem;
+      margin-bottom: 6px;
+      color: var(--amber);
+    }
+
+    .game-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .scenario-box {
+      background: #0d1526;
+      border: 1px solid #1c2b48;
+      border-radius: 12px;
+      padding: 18px;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .scenario-text {
+      font-size: 1.1rem;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    button.choice-btn {
+      background: #192642;
+      border: 1px solid #2d426d;
+      color: #fff;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    button.choice-btn:hover:not(:disabled) {
+      background: #23355c;
+      border-color: var(--amber);
+      transform: translateY(-1px);
+    }
+
+    button.choice-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .feedback-box {
+      display: none;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .feedback-box.correct {
+      display: block;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid var(--emerald);
+      color: #a7f3d0;
+    }
+
+    .feedback-box.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid var(--red);
+      color: #fca5a5;
+    }
+
+    .primary-btn {
+      align-self: flex-end;
+      background: var(--amber);
+      color: #0b121e;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      transition: opacity 0.2s;
+    }
+
+    .primary-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Styles pour l'ordonnancement du Jeu 3 */
+    .order-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .order-item {
+      background: #0d1526;
+      border: 1px solid #1c2b48;
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .order-item-content {
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+
+    .order-arrows {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .arrow-btn {
+      background: #1e2c4a;
+      border: 1px solid #324773;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .arrow-btn:hover:not(:disabled) {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: #0b121e;
+    }
+
+    .arrow-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Écran de Bilan */
+    .summary-card {
+      background: var(--card-bg);
+      border: 1px solid var(--emerald);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .summary-item {
+      background: #0d1526;
+      border: 1px solid #1c2b48;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .summary-item strong {
+      color: var(--amber);
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .summary-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      .tabs {
+        grid-template-columns: 1fr;
+      }
+      .btn-group {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="tag">Guide d'Entraînement Cour de Récré</div>
+      <h1>Mission : Le Secret de la Girafe 🦒</h1>
+      <p>Apprends à te faire comprendre sans crier, à écouter avec le cœur et à désamorcer les conflits.</p>
+    </header>
+
+    <div class="equation-banner">
+      <strong>La Règle d'Or :</strong> Une émotion est un SMS que le corps t'envoie. Quand une dispute éclate, cherche toujours le <em>trésor caché</em> : le besoin qui n'est pas rempli !
+    </div>
+
+    <!-- Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-btn-1" onclick="switchGame(1)">
+        <span>Jeu 1</span>
+        <span>Chacal ou Girafe ?</span>
+        <span class="badge-status" id="status-1">En cours</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-2" onclick="switchGame(2)">
+        <span>Jeu 2</span>
+        <span>Le Trésor Caché</span>
+        <span class="badge-status" id="status-2">En attente</span>
+      </button>
+      <button class="tab-btn" id="tab-btn-3" onclick="switchGame(3)">
+        <span>Jeu 3</span>
+        <span>La Formule Magique</span>
+        <span class="badge-status" id="status-3">En attente</span>
+      </button>
+    </div>
+
+    <!-- JEU 1 : Chacal vs Girafe -->
+    <section class="game-card active" id="game-1">
+      <div class="game-header">
+        <h2>Jeu 1 : Détecteur Chacal ou Girafe</h2>
+        <p>Lis attentivement la phrase. S'agit-il du langage du <strong>Chacal</strong> (jugements, ordres, reproches) ou de la <strong>Girafe</strong> (écoute, émotions, besoins) ?</p>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-text" id="g1-text">Chargement de la situation...</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="choice-btn" id="g1-btn-chacal" onclick="answerGame1('chacal')">🐺 Langage Chacal</button>
+        <button class="choice-btn" id="g1-btn-girafe" onclick="answerGame1('girafe')">🦒 Langage Girafe</button>
+      </div>
+
+      <div class="feedback-box" id="g1-feedback"></div>
+      <button class="primary-btn" id="g1-next" onclick="nextGame1()">Situation suivante</button>
+    </section>
+
+    <!-- JEU 2 : Le Trésor sous l'Émotion -->
+    <section class="game-card" id="game-2">
+      <div class="game-header">
+        <h2>Jeu 2 : Le Trésor sous l'Émotion (Rayons X)</h2>
+        <p>L'émotion visible n'est que la surface de l'eau. Devine quel est le <strong>besoin caché</strong> sous le comportement de l'élève : <strong>Respect / Être écouté</strong>, <strong>Sécurité / Confiance</strong>, <strong>Réconfort / Présence</strong> ou <strong>Partage / Réussite</strong> ?</p>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-text" id="g2-text">Chargement du scénario...</div>
+      </div>
+
+      <div class="btn-group">
+        <button class="choice-btn" onclick="answerGame2('respect')">🛡️ Respect & Être écouté</button>
+        <button class="choice-btn" onclick="answerGame2('securite')">🔒 Sécurité & Confiance</button>
+        <button class="choice-btn" onclick="answerGame2('reconfort')">❤️ Réconfort & Présence</button>
+        <button class="choice-btn" onclick="answerGame2('partage')">🎉 Partage & Réussite</button>
+      </div>
+
+      <div class="feedback-box" id="g2-feedback"></div>
+      <button class="primary-btn" id="g2-next" onclick="nextGame2()">Scénario suivant</button>
+    </section>
+
+    <!-- JEU 3 : La Formule Magique en 4 étapes -->
+    <section class="game-card" id="game-3">
+      <div class="game-header">
+        <h2>Jeu 3 : La Formule Magique en 4 étapes</h2>
+        <p>Quelqu'un a pris ton ballon sans demander. Remets les 4 étapes de la méthode Girafe dans le bon ordre chronologique pour récupérer ton ballon dans le calme.</p>
+      </div>
+
+      <div class="order-list" id="order-container"></div>
+
+      <div class="btn-group">
+        <button class="choice-btn" style="background: var(--amber); border-color: var(--amber); color: #0b121e;" onclick="checkOrderGame3()">Vérifier la formule</button>
+      </div>
+
+      <div class="feedback-box" id="g3-feedback"></div>
+    </section>
+
+    <!-- BILAN FINAL -->
+    <section class="summary-card" id="summary-section">
+      <h2 style="color: var(--amber); font-size: 1.6rem;">Bravo, tu parles Girafe ! 🦒</h2>
+      <p style="color: #cbd5e1; max-width: 650px; margin: 0 auto; line-height: 1.5;">
+        Tu as activé le super-pouvoir du plus grand cœur. Grâce à la communication bienveillante, la cour de récréation devient un espace de calme et de respect.
+      </p>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <strong>1. Écouter sans couper</strong>
+          <p>Laisser l'autre s'exprimer jusqu'au bout, c'est déjà faire la moitié du chemin vers la paix.</p>
+        </div>
+        <div class="summary-item">
+          <strong>2. Nommer le SMS intérieur</strong>
+          <p>Reconnaître ses émotions (peur, colère, tristesse) pour identifier le vrai besoin caché en dessous.</p>
+        </div>
+        <div class="summary-item">
+          <strong>3. Les 4 étapes magiques</strong>
+          <p>Observation factuelle + Émotion + Besoin + Demande claire et positive sans accuser ni insulter.</p>
+        </div>
+        <div class="summary-item">
+          <strong>4. Alerter les adultes</strong>
+          <p>La Girafe ne remplace pas les adultes face à la violence ou au harcèlement : elle va chercher de l'aide (ou appelle le 3018).</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 15px;">
+        <button class="choice-btn" onclick="restartAll()">Recommencer la formation</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    /* JEU 1 : Chacal vs Girafe */
+    const g1Questions = [
+      {
+        text: "« Tu es nul ! Tu prends toujours mes affaires sans me demander ! »",
+        correct: "chacal",
+        goodFeedback: "Exact ! C'est le Chacal qui parle : il attaque, juge, utilise des mots comme « Toujours » et donne envie à l'autre de se bagarrer.",
+        badFeedback: "Attention : cette phrase juge et accuse avec des mots absolus (« toujours », « nul »). C'est typique du Chacal !"
+      },
+      {
+        text: "« Quand tu as pris mon ballon, j'ai été en colère parce que j'ai besoin de respect. »",
+        correct: "girafe",
+        goodFeedback: "Bravo ! C'est la voix de la Girafe : elle décrit les faits sans insulter, nomme son émotion et exprime son besoin.",
+        badFeedback: "Erreur : cette phrase ne juge pas. Elle décrit un fait et formule une émotion (« je me sens... »). C'est la Girafe !"
+      },
+      {
+        text: "« Tu ne m'écoutes jamais, t'es vraiment méchant ! »",
+        correct: "chacal",
+        goodFeedback: "Exact ! Le Chacal critique, étiquette (« méchant ») et exagère (« jamais »), ce qui bloque le dialogue.",
+        badFeedback: "Attention : dire « tu es méchant » et « tu n'écoutes jamais » est une attaque frontale. C'est le Chacal."
+      },
+      {
+        text: "« Si j'ai bien compris, tu te sens triste parce que tu aimerais jouer avec nous ? »",
+        correct: "girafe",
+        goodFeedback: "Exact ! Ce sont les oreilles de Girafe (le Détective et l'Écho) : écouter avec le cœur pour comprendre le besoin de l'autre.",
+        badFeedback: "Attention : cette phrase reformule avec empathie pour comprendre l'autre. C'est l'écoute de la Girafe."
+      }
+    ];
+
+    let g1Index = 0;
+    let g1Completed = false;
+
+    /* JEU 2 : Rayons X / Trésors cachés */
+    const g2Questions = [
+      {
+        text: "Dans les rangs, un camarade explose de colère en criant dès qu'on le bouscule légèrement.",
+        correct: "respect",
+        goodFeedback: "Exact ! Sous la Colère se cache souvent un trésor : le besoin d'être respecté et écouté.",
+        badFeedback: "Ce n'est pas ce besoin : selon le guide, sous la Colère se trouve principalement un besoin de Respect et d'être écouté."
+      },
+      {
+        text: "Un élève tremble et refuse d'aller jouer au fond de la cour parce que les grands y crient fort.",
+        correct: "securite",
+        goodFeedback: "Exact ! Sous la Peur se cache un SMS vital : le besoin de Sécurité et de Confiance.",
+        badFeedback: "Regarde bien l'émotion (la Peur) : son trésor sous l'eau est le besoin de Sécurité et de Confiance."
+      },
+      {
+        text: "Un enfant reste assis seul sur un banc avec les yeux mouillés et la tête baissée.",
+        correct: "reconfort",
+        goodFeedback: "Bravo ! Sous la Tristesse se dissimule un besoin profond de Réconfort et de Présence.",
+        badFeedback: "Ce n'est pas le bon trésor : sous la Tristesse, l'enfant a avant tout besoin de Réconfort et de Présence."
+      },
+      {
+        text: "Un camarade saute partout et court vers tout le monde après avoir réussi un exercice difficile.",
+        correct: "partage",
+        goodFeedback: "Exact ! Sous la Joie et l'enthousiasme se cache l'envie de Partage et de célébrer sa Réussite !",
+        badFeedback: "Pas tout à fait : sous la Joie, le besoin naturel est le Partage avec ses camarades et la reconnaissance de sa Réussite."
+      }
+    ];
+
+    let g2Index = 0;
+    let g2Completed = false;
+
+    /* JEU 3 : La formule magique en 4 étapes */
+    const g3CorrectSteps = [
+      { id: 1, text: "1. « Quand tu as pris mon ballon sans demander... » (Ce que je vois/entends sans juger)" },
+      { id: 2, text: "2. « ...j'ai été en colère... » (Je nomme mon émotion / mon SMS)" },
+      { id: 3, text: "3. « ...parce que j'ai besoin de respect. » (Je révèle mon trésor caché / mon besoin)" },
+      { id: 4, text: "4. « ...Peux-tu me le rendre s'il te plaît ? » (Je formule une demande précise et positive)" }
+    ];
+
+    let g3CurrentList = [
+      g3CorrectSteps[2],
+      g3CorrectSteps[0],
+      g3CorrectSteps[3],
+      g3CorrectSteps[1]
+    ];
+    let g3Completed = false;
+
+    /* NAVIGATION */
+    function switchGame(gameNum) {
+      document.querySelectorAll('.game-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('summary-section').style.display = 'none';
+
+      document.getElementById('game-' + gameNum).classList.add('active');
+      document.getElementById('tab-btn-' + gameNum).classList.add('active');
+    }
+
+    /* GESTION DU JEU 1 */
+    function renderGame1() {
+      const q = g1Questions[g1Index];
+      document.getElementById('g1-text').innerText = q.text;
+      const fb = document.getElementById('g1-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+      document.getElementById('g1-next').style.display = 'none';
+      document.getElementById('g1-btn-chacal').disabled = false;
+      document.getElementById('g1-btn-girafe').disabled = false;
+    }
+
+    function answerGame1(choice) {
+      const q = g1Questions[g1Index];
+      const fb = document.getElementById('g1-feedback');
+      document.getElementById('g1-btn-chacal').disabled = true;
+      document.getElementById('g1-btn-girafe').disabled = true;
+
+      if (choice === q.correct) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = q.badFeedback;
+      }
+
+      document.getElementById('g1-next').style.display = 'block';
+    }
+
+    function nextGame1() {
+      g1Index++;
+      if (g1Index < g1Questions.length) {
+        renderGame1();
+      } else {
+        g1Completed = true;
+        document.getElementById('status-1').innerText = 'Validé ✓';
+        document.getElementById('status-1').style.color = 'var(--emerald)';
+        document.getElementById('status-2').innerText = 'En cours';
+        switchGame(2);
+        checkAllCompleted();
+      }
+    }
+
+    /* GESTION DU JEU 2 */
+    function renderGame2() {
+      const q = g2Questions[g2Index];
+      document.getElementById('g2-text').innerText = q.text;
+      const fb = document.getElementById('g2-feedback');
+      fb.className = 'feedback-box';
+      fb.innerText = '';
+      document.getElementById('g2-next').style.display = 'none';
+      document.querySelectorAll('#game-2 .choice-btn').forEach(btn => btn.disabled = false);
+    }
+
+    function answerGame2(choice) {
+      const q = g2Questions[g2Index];
+      const fb = document.getElementById('g2-feedback');
+      document.querySelectorAll('#game-2 .choice-btn').forEach(btn => btn.disabled = true);
+
+      if (choice === q.correct) {
+        fb.className = 'feedback-box correct';
+        fb.innerText = q.goodFeedback;
+      } else {
+        fb.className = 'feedback-box error';
+        fb.innerText = q.badFeedback;
+      }
+
+      document.getElementById('g2-next').style.display = 'block';
+    }
+
+    function nextGame2() {
+      g2Index++;
